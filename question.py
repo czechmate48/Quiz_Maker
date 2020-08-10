@@ -6,19 +6,6 @@ be converted to  a dictionary using the built in method'''
 
 import ast
 
-class Question_Styles():
-    '''The question styles used for this specific program'''
-    true_false="TRUE/FALSE"
-    multiple_choice="MULTIPLE CHOICE"
-    fill_in_the_blank="FILL IN THE BLANK"
-
-class Question_Keys():
-    '''The question keys used for this specific program'''
-    style="style"
-    inquiry="inquiry"
-    choices="choices"
-    answer="answer"
-
 class Question():
 
     def __init__(self, qvalues, qkeys):

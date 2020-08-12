@@ -11,9 +11,8 @@ options=[
     Option("Remove question","C:"),Option("Quit","C:")
     ]
 menu = Menu(options)
-selection = chr(menu.optionLim+1)
-menu.display_header_one('VIM LEARNER 0.0')
+selection = menu.initial_selection
+menu.display_header_one('QUIZ MAKER 1.0')
 menu.display_menu()
+menu.get_user_selection()
 
-while not menu.valid_selection(selection):
-    selection = input().upper()

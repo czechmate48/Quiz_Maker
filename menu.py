@@ -12,30 +12,42 @@ class Menu:
     from typing import Final
 
     def __init__(self,options):
-        self._firstOption: Final = 65 #Used as a constant, starting ascii 65 (A)
-        self._lastOption = self._firstOption 
-        self.optionLim: Final = 90 #Limited to 25 menu options
-        self.assignedOptions={} #options assigned a corresponding letter
+        '''requires an option object from Option class'''
+        self.first_option: Final = 65 #Used as a constant, starting ascii 65 (A)
+        self._last_option = self.first_option 
+        self._option_lim: Final = 90 #Limited to 25 menu options
+        self.assigned_options={} #options assigned a corresponding letter
         for option in options:
-            if self._lastOption < self.optionLim:
-                self.assignedOptions[chr(self._lastOption)] = option.title
-                self._lastOption+=1
+            if self._last_option < self._option_lim:
+                self.assigned_options[chr(self._last_option)] = option.title
+                self._last_option+=1
             else:
                 #throw out of bounds error
                 break
+        self.initial_selection = chr(self._option_lim+1) #initial user selection used to launch loop
+        self.selection_message = "\nPlease make a selection" #Can be overriden for customization
 
-    def display_menu(self):
-        for option in self.assignedOptions:
-            print(option,')',self.assignedOptions[option])
+    def display_options(self):
+        for option in self.assigned_options:
+            print(option,')',self.assigned_options[option])
     
     def display_selection_message(self):
-        print("\nPlease make a selection")
+        print(self.selection_message)
 
-    def valid_selection(self,selection):
+    def get_user_input(self):
+        return input().upper()
+
+    def get_user_selection(self):
+        self._selection = self.initial_selection
+        while not self.check_valid_selection(self._selection):
+            self._selection=input().upper()
+        return self._selection
+
+    def check_valid_selection(self,selection):
         if Selection.greater_than_one(selection):
             self.display_selection_message()
             return False
-        elif not Selection.within_bounds(ord(selection),self._firstOption,self._lastOption):
+        elif not Selection.within_bounds(ord(selection),self.first_option,self._last_option):
             self.display_selection_message()
             return False
         elif not Selection.is_unicode(ord(selection)): #lower and upper unicode values
@@ -64,6 +76,12 @@ class Option():
     def __init__(self,title,filePath='C:'):
         self.title=title
         self.filePath=filePath
+        
+    @staticmethod
+    def generate_option_list(values):
+        '''brings in an iterable and returns a list of instantiated options'''
+        options = [Option(value) for value in values]
+        return options
 
 ##############################
 class Selection():

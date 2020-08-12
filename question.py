@@ -1,4 +1,4 @@
-#Question.py
+#question.py
 '''Creates a question object that contains a variable for
 each component of a question. Note that the question object
 does NOT produce a dictionary by default, and will need to 
@@ -8,6 +8,17 @@ import ast
 
 class Question():
 
+    style="style"
+    inquiry="inquiry"
+    choices="choices"
+    answer="answer"
+    standard_keys=(style,inquiry,choices,answer)
+
+    true_false="TRUE/FALSE"
+    multiple_choice="MULTIPLE CHOICE"
+    fill_in_the_blank="FILL IN THE BLANK"
+    styles = (true_false,multiple_choice,fill_in_the_blank)
+    
     def __init__(self, qvalues, qkeys):
         self._values=[]
         for qvalue in qvalues:

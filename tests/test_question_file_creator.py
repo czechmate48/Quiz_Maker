@@ -3,15 +3,15 @@ import ast
 from link_imports import link_parent_directory
 link_parent_directory()
 from file_manager import File_Reader,File_Writer 
-from question import Question, Question_Keys, Question_Styles
+from question import Question
 
 #######
 #MIGHT BE AN ISSUE WITH CHOICES TUPLE IN CREATION
 test_file='test_file.txt'
-keys=[Question_Keys.style,Question_Keys.inquiry,Question_Keys.choices,Question_Keys.answer]
-q1_values=(Question_Styles.true_false,'Do you like food?',('true','false'),'true')
-q2_values=(Question_Styles.multiple_choice,'Best part of the day.',('morning','afternoon','night'),'night')
-q3_values=(Question_Styles.fill_in_the_blank,'America was discovered in ****',(''),'1492')
+keys=[Question.style,Question.inquiry,Question.choices,Question.answer]
+q1_values=(Question.true_false,'Do you like food?',('true','false'),'true')
+q2_values=(Question.multiple_choice,'Best part of the day.',('morning','afternoon','night'),'night')
+q3_values=(Question.fill_in_the_blank,'America was discovered in ****',(''),'1492')
 q1=Question(q1_values,keys)
 q2=Question(q2_values,keys)
 q3=Question(q3_values,keys)

@@ -1,0 +1,10 @@
+{'style': 'MULTIPLE CHOICE', 'inquiry': 'WHAT IS YOUR NAME', 'choices': ['chris', 'biff'], 'answer': 'chris'}
+{'style': 'TRUE/FALSE', 'inquiry': 'DO YOU LIKE CHICKEN?', 'choices': ['true', 'false'], 'answer': 'false'}
+{'style': 'FILL IN THE BLANK', 'inquiry': 'I AM __ YEARS OLD', 'choices': [], 'answer': '15'}
+{'style': 'MULTIPLE CHOICE', 'inquiry': 'WHAT IS NAME?', 'choices': ['chris', 'peter'], 'answer': 'chris'}
+{'style': 'MULTIPLE CHOICE', 'inquiry': 'WHAT IS NAME?', 'choices': ['Chris', 'peter'], 'answer': 'Chris'}
+{'style': 'TRUE/FALSE', 'inquiry': 'IS THIS TRU?', 'choices': ['true', 'false'], 'answer': 'false'}
+{'style': 'FILL IN THE BLANK', 'inquiry': 'WHAT IS MOTHER?', 'choices': [], 'answer': 'DUMB'}
+{'style': 'FILL IN THE BLANK', 'inquiry': 'WHAT IS MOTHER', 'choices': [], 'answer': 'THIS'}
+{'style': 'MULTIPLE CHOICE', 'inquiry': 'HOW MANY FRIEDS DO YOU HAVE?', 'choices': ['q', '5'], 'answer': '5'}
+{'style': 'TRUE/FALSE', 'inquiry': 'WHAT IS YOUR NAME?', 'choices': ['true', 'false'], 'answer': 'false'}

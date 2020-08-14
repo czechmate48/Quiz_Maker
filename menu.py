@@ -38,13 +38,21 @@ class Menu:
         return input().upper()
 
     def get_user_selection(self):
+        '''Gets the option letter selected by the user'''
         self._selection = self.initial_selection
         while not self.check_valid_selection(self._selection):
             self._selection=input().upper()
         return self._selection
 
+    def get_selected_value(self,selection):
+        '''Get the value specified by the option letter'''
+        return self.assigned_options[selection]
+
     def check_valid_selection(self,selection):
-        if Selection.greater_than_one(selection):
+        if Selection.is_empty(selection):
+            self.display_selection_message()
+            return False
+        elif Selection.greater_than_one(selection):
             self.display_selection_message()
             return False
         elif not Selection.within_bounds(ord(selection),self.first_option,self._last_option):
@@ -66,7 +74,26 @@ class Menu:
 
     def display_header_two(self,header):
         print(header)
-        
+       
+#############################
+
+class Menu_Factory():
+
+    @staticmethod
+    def run_option_menu(options,selection_message,header):
+        menu = Menu(options)
+        menu.selection_message = selection_message
+        menu.display_header_two(header)
+        menu.display_options()
+        selection=menu.get_user_selection()
+        return menu.get_selected_value(selection)
+
+    @staticmethod
+    def run_no_option_menu(header):
+        menu=Menu([])
+        menu.display_header_two(header)
+        return menu.get_user_input()
+
 ##############################
 
 class Option():
@@ -84,6 +111,7 @@ class Option():
         return options
 
 ##############################
+
 class Selection():
     """Utility class that provides static methods used to make determinations
     about the user selection"""
@@ -99,3 +127,7 @@ class Selection():
     @staticmethod
     def is_unicode(value):
         return value > 0 and value < 0x10FFF
+
+    @staticmethod
+    def is_empty(string):
+        return len(string) == 0

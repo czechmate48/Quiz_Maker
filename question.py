@@ -6,7 +6,7 @@ be converted to  a dictionary using the built in method'''
 
 from menu import Menu_Factory,Option
 from dataclasses import dataclass
-from file_manager import File_Writer
+from file_manager import File_Writer, File_Reader
 import ast
 
 #######################
@@ -30,6 +30,7 @@ class Question_Keys():
     '''This class holds the standard keys used when creating questions.
     Extend class and just add values as needed for new keys'''
 
+    uid: str="uid"
     style: str="style"
     inquiry: str="inquiry"
     choices: str="choices"
@@ -40,24 +41,15 @@ class Question_Keys():
         qk=Question_Keys()
         return [qk.__dict__[var] for var in qk.__dict__]
 
-######################
+class Question_Utility(File_Writer,File_Reader):
 
-class Question():
-    
-    def __init__(self, qvalues, qkeys):
-        self._values=[]
-        for qvalue in qvalues:
-            self._values.append(qvalue)
-        self._keys=[]
-        for qkey in qkeys:
-            self._keys.append(qkey)
-
-    def update(self,qvalues,qkeys):
-        self.__init__(qvalues,qkeys)
-
-    ###############################
-    #Reading questions from a file#
-    ###############################
+    @classmethod
+    def get_all_question_values_by_key(cls,_key,_file_path):
+        _lines=cls.get_lines(_file_path) 
+        _questions = [cls.get_question_from_line(line,Question_Keys.get_keys()) for line in _lines]
+        _questions_dict = [cls.get_question_as_dictionary(question) for question in _questions]
+        _values = [question_dict[_key] for question_dict in _questions_dict]
+        return _values
 
     @classmethod
     def get_question_from_line(cls,line,qkeys):
@@ -69,26 +61,51 @@ class Question():
         for _key in qkeys:
             _qvalues.append(_raw_content[_key])
         return Question(_qvalues,qkeys)
-    
-    ######################
-    #Converting questions#
-    ######################
+   
+    @classmethod
+    def append_question_to_file(cls,_file_path,_question):
+        _line = cls.get_question_as_dictionary(_question)
+        cls.write_line(_line,_file_path)
 
-    def get_question_as_dictionary(self):
-        _items=zip(self._keys,self._values) 
+    @classmethod
+    def get_question_as_dictionary(cls,question):
+        _items=zip(question._keys,question._values) 
         _line={}
         for item in _items:
             _line[item[0]]=item[1]
         return _line
-   
-    ############################
-    #Writing question to a file#
-    ############################
 
-    def append_question_to_file(self,file_path):
-        _line = self.get_question_as_dictionary()
-        fw = File_Writer(file_path)
-        fw.write_line(_line)
+######################
+
+class Question():
+    '''Questions are created with a style, inquiry, choices, and an answer.
+    Each question has a unique ID'''
+
+    def __init__(self, qvalues, qkeys):
+        self._uid=id(self)
+        self._values=[]
+        self._values.append(self._uid)
+        for qvalue in qvalues:
+            self._values.append(qvalue)
+        self._keys=[]
+        for qkey in qkeys:
+            self._keys.append(qkey)
+
+    def update(self,qvalues,qkeys):
+        self.__init__(qvalues,qkeys)
+
+    def set_uid(self,_uid,_values=[]):
+        '''Set the unique identifier. If a set of values are
+        sent in, the unique identifier is checked against them'''
+        while self.check_uid_present(_uid,_values):
+            _uid+=1    
+        self._uid=_uid
+
+    def check_uid_present(self,_uid,_values=[]):
+        for value in _values:
+            if _uid==value:
+                return True
+        return False
 
     ##########################
     #Prompting for user input#

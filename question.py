@@ -7,6 +7,7 @@ be converted to  a dictionary using the built in method'''
 from menu import Menu_Factory,Option
 from dataclasses import dataclass
 from file_manager import File_Writer, File_Reader
+from temp import Unique_Id
 import ast
 
 #######################
@@ -41,71 +42,53 @@ class Question_Keys():
         qk=Question_Keys()
         return [qk.__dict__[var] for var in qk.__dict__]
 
-class Question_Utility(File_Writer,File_Reader):
-
+class Question_IO(File_Writer,File_Reader):
+    
     @classmethod
-    def get_all_question_values_by_key(cls,_key,_file_path):
-        _lines=cls.get_lines(_file_path) 
-        _questions = [cls.get_question_from_line(line,Question_Keys.get_keys()) for line in _lines]
-        _questions_dict = [cls.get_question_as_dictionary(question) for question in _questions]
-        _values = [question_dict[_key] for question_dict in _questions_dict]
-        return _values
-
-    @classmethod
-    def get_question_from_line(cls,line,qkeys):
-        '''Get a question from a line in a text file.
-        The line must be saved in dictionary format
-        as this method derives keys & values'''
-        _raw_content=ast.literal_eval(line)
+    def read_question_from_file(cls,_line,_qkeys):
+        '''Get a question from a line in a text file.'''
+        _raw_content=ast.literal_eval(_line)
         _qvalues=[]
-        for _key in qkeys:
-            _qvalues.append(_raw_content[_key])
-        return Question(_qvalues,qkeys)
+        for key in _qkeys:
+            _qvalues=_qvalues.append(_raw_content[key])
+        return Question_Factory.create_question(_qvalues,_qkeys,False) #create a generic question
    
     @classmethod
     def append_question_to_file(cls,_file_path,_question):
-        _line = cls.get_question_as_dictionary(_question)
-        cls.write_line(_line,_file_path)
+        cls.write_line(_question.content,_file_path)
 
     @classmethod
-    def get_question_as_dictionary(cls,question):
-        _items=zip(question._keys,question._values) 
-        _line={}
-        for item in _items:
-            _line[item[0]]=item[1]
-        return _line
+    def prompt_remove_question(cls,_file_path):
+        _questions = cls.get_values(Question_Keys.inquiry,_file_path)
+        _options = Option.generate_value_options(_questions)
+        _header = "\nWhich question would you like to delete?\n"
+        _selection_message="\nPlease select a question\n"
+        return Menu_Factory.run_option_menu(_options,_selection_message,_header)
 
-######################
+#####################
 
 class Question():
     '''Questions are created with a style, inquiry, choices, and an answer.
-    Each question has a unique ID'''
+    Each question has a unique ID that may or may not be created at instantiation,
+    depending upon whether the contents passed into the Question already have an ID'''
 
-    def __init__(self, qvalues, qkeys):
-        self._uid=id(self)
+    def __init__(self, qvalues, qkeys, generate_id=True):
         self._values=[]
-        self._values.append(self._uid)
-        for qvalue in qvalues:
-            self._values.append(qvalue)
         self._keys=[]
+        if generate_id:
+            self._values.append(Unique_Id(id(self)))
+        for qvalue in qvalues:
+            self._values.append(qvalue) 
         for qkey in qkeys:
-            self._keys.append(qkey)
+            self._keys.append(qkeys)
+        self.content=merge_input(qvalues,qkeys)
 
-    def update(self,qvalues,qkeys):
-        self.__init__(qvalues,qkeys)
+    def merge_input(self,qvalues,qkeys):
+        _items=zip(question._keys,question._values) 
+        return {item[0]:item[1] for item in _items}
 
-    def set_uid(self,_uid,_values=[]):
-        '''Set the unique identifier. If a set of values are
-        sent in, the unique identifier is checked against them'''
-        while self.check_uid_present(_uid,_values):
-            _uid+=1    
-        self._uid=_uid
-
-    def check_uid_present(self,_uid,_values=[]):
-        for value in _values:
-            if _uid==value:
-                return True
-        return False
+    def update(self,qvalues,qkeys,generate_id):
+        self.__init__(qvalues,qkeys,generate_id)
 
     ##########################
     #Prompting for user input#
@@ -113,7 +96,7 @@ class Question():
 
     @staticmethod
     def prompt_for_style():
-        _options = Option.generate_option_list(Question_Styles.get_styles())
+        _options = Option.generate_value_options(Question_Styles.get_styles())
         _selection_message = "\nPlease select a question style\n"
         _header="\nwhat is the question style?\n"
         return Menu_Factory.run_option_menu(_options,_selection_message,_header)
@@ -142,7 +125,7 @@ class True_False(Question):
         return ["true","false"]
 
     def prompt_for_answer(self,_choices):
-        _options=Option.generate_option_list(_choices)
+        _options=Option.generate_value_options(_choices)
         _selection_message="\nSelect correct answer\n"
         _header="\nWhich choice is the correct answer?\n"
         return Menu_Factory.run_option_menu(_options,_selection_message,_header)
@@ -176,7 +159,7 @@ class Multiple_Choice(Question):
         return _choices
 
     def prompt_for_answer(self,_choices):
-        _options=Option.generate_option_list(_choices)
+        _options=Option.generate_value_options(_choices)
         _selection_message="\nSelect correct answer"
         _header="\nWhich choice is the correct answer?\n"
         return Menu_Factory.run_option_menu(_options,_selection_message,_header)
@@ -188,22 +171,28 @@ class Multiple_Choice(Question):
 class Question_Factory():
 
     @staticmethod
-    def create_question(qstyle):
+    def create_question(qstyle,qvalues=[],qkeys=Question_Keys.get_keys(),generate_key=True):
         if qstyle == Question_Styles.true_false:
-            return Question_Factory.create_true_false_question()
+            return Question_Factory.create_true_false_question(qvalues,qkeys,generate_key)
         elif qstyle == Question_Styles.multiple_choice:
-            return Question_Factory.create_multiple_choice_question()
+            return Question_Factory.create_multiple_choice_question(qvalues,qkeys,generate_key)
         elif qstyle == Question_Styles.fill_in_the_blank:
-            return Question_Factory.create_fill_in_the_blank_question()
+            return Question_Factory.create_fill_in_the_blank_question(qvalues,qkeys,generate_key)
+        else:
+            return Question_Factory.create_generic_question(qvalues,qkeys,generate_key)
 
     @staticmethod
-    def create_true_false_question(qvalues=[],qkeys=Question_Keys.get_keys()):
-        return True_False(qvalues,qkeys)
+    def create_true_false_question(qvalues=[],qkeys=Question_Keys.get_keys(),generate_key=True):
+        return True_False(qvalues,qkeys,generate_key)
 
     @staticmethod
-    def create_multiple_choice_question(qvalues=[],qkeys=Question_Keys.get_keys()):
-        return Multiple_Choice(qvalues,qkeys)
+    def create_multiple_choice_question(qvalues=[],qkeys=Question_Keys.get_keys(),generate_key=True):
+        return Multiple_Choice(qvalues,qkeys,generate_key)
 
     @staticmethod
-    def create_fill_in_the_blank_question(qvalues=[],qkeys=Question_Keys.get_keys()):
-        return Fill_In_The_Blank(qvalues,qkeys)
+    def create_fill_in_the_blank_question(qvalues=[],qkeys=Question_Keys.get_keys(),generate_key=True):
+        return Fill_In_The_Blank(qvalues,qkeys,generate_key)
+
+    @staticmethod
+    def create_generic_question(qvalues=[],qkeys=Question_Keys.get_keys(),generate_key=True):
+        return Question(qvalues,qkeys,generate_key)

@@ -5,6 +5,8 @@ file that contains the next set of code.'''
 
 ###########################
 
+from temp import Unique_Id
+
 class Menu:
     """Menu brings in a set of options and converts them
     into a dictionary - [selection variable,option]"""
@@ -19,7 +21,7 @@ class Menu:
         self.assigned_options={} #options assigned a corresponding letter
         for option in options:
             if self._last_option < self._option_lim:
-                self.assigned_options[chr(self._last_option)] = option.title
+                self.assigned_options[chr(self._last_option)] = option
                 self._last_option+=1
             else:
                 #throw out of bounds error
@@ -29,7 +31,7 @@ class Menu:
 
     def display_options(self):
         for option in self.assigned_options:
-            print(option,')',self.assigned_options[option])
+            print(option,')',self.assigned_options[option.display_value])
     
     def display_selection_message(self):
         print(self.selection_message)
@@ -38,15 +40,11 @@ class Menu:
         return input().upper()
 
     def get_user_selection(self):
-        '''Gets the option letter selected by the user'''
+        '''returns the option object selected by the user'''
         self._selection = self.initial_selection
         while not self.check_valid_selection(self._selection):
             self._selection=input().upper()
-        return self._selection
-
-    def get_selected_value(self,selection):
-        '''Get the value specified by the option letter'''
-        return self.assigned_options[selection]
+        return self.assigned_options[selections]
 
     def check_valid_selection(self,selection):
         if Selection.is_empty(selection):
@@ -85,8 +83,7 @@ class Menu_Factory():
         menu.selection_message = selection_message
         menu.display_header_two(header)
         menu.display_options()
-        selection=menu.get_user_selection()
-        return menu.get_selected_value(selection)
+        return menu.get_user_selection()
 
     @staticmethod
     def run_no_option_menu(header):
@@ -97,19 +94,35 @@ class Menu_Factory():
 ##############################
 
 class Option():
+
+    #have unique ID
+    #have display
+
     """This class creates an option object which contains an option title
     as well as a path to the file containing the code"""
 
-    def __init__(self,title,filePath='C:'):
-        self.title=title
+    #options have a unique ID & a display value. The unique ID is how the option
+    #is referenced and identified as unique should there be similar display values
+
+    def __init__(self,display_value,uid=0,filePath='C:'):
+        
+        #Does the option already exist?
+        #If not, Is the unique ID already taken?
+        
+        if uid==0:
+            self.uid=generate_uid()
+        self.display_value = display_value
         self.filePath=filePath
         
     @staticmethod
-    def generate_option_list(values):
+    def generate_value_options(values):
         '''brings in an iterable and returns a list of instantiated options'''
         options = [Option(value) for value in values]
         return options
 
+    @staticmethod
+    def generate_data_options(values):
+        pass
 ##############################
 
 class Selection():

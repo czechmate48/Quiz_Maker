@@ -5,7 +5,7 @@ file that contains the next set of code.'''
 
 ###########################
 
-from temp import Unique_Id
+from cache import Unique_Id
 
 class Menu:
     """Menu brings in a set of options and converts them
@@ -22,6 +22,7 @@ class Menu:
         for option in options:
             if self._last_option < self._option_lim:
                 self.assigned_options[chr(self._last_option)] = option
+                option.set_letter(chr(self._last_option))
                 self._last_option+=1
             else:
                 #throw out of bounds error
@@ -29,14 +30,30 @@ class Menu:
         self.initial_selection = chr(self._option_lim+1) #initial user selection used to launch loop
         self.selection_message = "\nPlease make a selection" #Can be overriden for customization
 
+    ###############
+
     def display_options(self):
         for option in self.assigned_options:
-            print(option,')',self.assigned_options[option.display_value])
+            print(option,')',self.assigned_options[option].display_value)
     
     def display_selection_message(self):
         print(self.selection_message)
 
+    def display_header_one(self,header):
+        for x in header:
+            print('#',end="")
+        print('\n',header)
+        for x in header:
+            print('#',end="")
+        print('\n',end="")
+
+    def display_header_two(self,header):
+        print(header)
+
+    ###############
+
     def get_user_input(self):
+        '''Used when there are no options'''
         return input().upper()
 
     def get_user_selection(self):
@@ -44,7 +61,7 @@ class Menu:
         self._selection = self.initial_selection
         while not self.check_valid_selection(self._selection):
             self._selection=input().upper()
-        return self.assigned_options[selections]
+        return self.assigned_options[self._selection]
 
     def check_valid_selection(self,selection):
         if Selection.is_empty(selection):
@@ -62,17 +79,6 @@ class Menu:
         else:
             return True
 
-    def display_header_one(self,header):
-        for x in header:
-            print('#',end="")
-        print('\n',header)
-        for x in header:
-            print('#',end="")
-        print('\n',end="")
-
-    def display_header_two(self,header):
-        print(header)
-       
 #############################
 
 class Menu_Factory():
@@ -83,7 +89,7 @@ class Menu_Factory():
         menu.selection_message = selection_message
         menu.display_header_two(header)
         menu.display_options()
-        return menu.get_user_selection()
+        return menu.get_user_selection() #returns an option object, not a display_value
 
     @staticmethod
     def run_no_option_menu(header):
@@ -95,34 +101,28 @@ class Menu_Factory():
 
 class Option():
 
-    #have unique ID
-    #have display
-
-    """This class creates an option object which contains an option title
-    as well as a path to the file containing the code"""
-
-    #options have a unique ID & a display value. The unique ID is how the option
-    #is referenced and identified as unique should there be similar display values
-
-    def __init__(self,display_value,uid=0,filePath='C:'):
-        
-        #Does the option already exist?
-        #If not, Is the unique ID already taken?
-        
-        if uid==0:
-            self.uid=generate_uid()
+    def __init__(self,display_value,link_uid=-1): #link_uid of -1 means no link
+        self.uid=Unique_Id.generate_uid(id(self))
         self.display_value = display_value
-        self.filePath=filePath
-        
-    @staticmethod
-    def generate_value_options(values):
-        '''brings in an iterable and returns a list of instantiated options'''
-        options = [Option(value) for value in values]
-        return options
+        self.linked_uid=link_uid
+        self.letter="A" #Updated in Menu
+
+    def set_letter(self,letter):
+        self.letter = letter
+
+class Option_Factory():
+    '''linked options connect the option UID with another UID, unlinked options
+    simply display a display_value'''
 
     @staticmethod
-    def generate_data_options(values):
-        pass
+    def generate_linked_options(display_values,uids):
+        _values=zip(display_values,uids)
+        return [Option(value[0],value[1]) for value in _values]
+
+    @staticmethod
+    def generate_unlinked_options(display_values):
+        return [Option(value) for value in display_values]
+
 ##############################
 
 class Selection():

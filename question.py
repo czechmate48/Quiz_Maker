@@ -7,7 +7,7 @@ be converted to  a dictionary using the built in method'''
 from menu import Menu_Factory,Option_Factory
 from dataclasses import dataclass
 from file_manager import File_Writer, File_Reader
-from cache import Unique_Id
+from cache import Unique_Id, Cache_Cat, Question_Cache
 import ast
 
 #######################
@@ -16,7 +16,8 @@ import ast
 class Question_Styles():
     '''This class holds the various types of styles a question can be.
     Extend class and just add values as needed for new styles'''
-    
+   
+    generic: str="GENERIC"
     true_false: str="TRUE/FALSE"
     multiple_choice: str="MULTIPLE CHOICE"
     fill_in_the_blank: str="FILL IN THE BLANK"
@@ -45,13 +46,13 @@ class Question_Keys():
 class Question_IO(File_Writer,File_Reader):
    
     @classmethod
-    def populate_cache(cls,_file_path):
+    def create_cache(cls,_file_path):
         _lines = cls.get_lines(_file_path)
         _questions=[]
         for line in _lines:
-            _questions.add(read_question_from_file(line,Question_Keys.get_keys))
+            _questions.append(Question_IO.read_question_from_file(line,Question_Keys.get_keys()))
         for question in _questions:
-            Question_Cache.add(Cache_Cat,question)
+            Question_Cache.add(Cache_Cat.question,question)
 
     @classmethod
     def read_question_from_file(cls,_line,_qkeys):
@@ -59,12 +60,17 @@ class Question_IO(File_Writer,File_Reader):
         _raw_content=ast.literal_eval(_line)
         _qvalues=[]
         for key in _qkeys:
-            _qvalues=_qvalues.append(_raw_content[key])
-        return Question_Factory.create_question(_qvalues,_qkeys,False) #create a generic question
+            _qvalues.append(_raw_content[key])
+        return Question_Factory.create_question(Question_Styles.generic,_qvalues,_qkeys,False) #create generic
    
     @classmethod
     def append_question_to_file(cls,_file_path,_question):
-        cls.write_line(_question.content,_file_path)
+        cls.append_line(_question.content,_file_path)
+
+    @classmethod
+    def overwrite_questions_to_file(cls,_file_path,_questions):
+        _questions_content = [_question.content for _question in _questions]
+        cls.overwrite_file(_questions_content,_file_path)
 
     @classmethod
     def prompt_remove_question(cls,_file_path):
@@ -91,7 +97,7 @@ class Question():
         for qvalue in qvalues:
             self._values.append(qvalue) 
         for qkey in qkeys:
-            self._keys.append(qkeys)
+            self._keys.append(qkey)
         self.content=self.merge_input(qvalues,qkeys)
 
     def merge_input(self,qvalues,qkeys):
@@ -124,8 +130,11 @@ class Question():
         _header = "Please input the answer"
         return Menu_Factory.run_no_option_menu(_header)
 
-    def display():
-        pass
+    def get_inquiry(self):
+        return self.content[Question_Keys.inquiry]
+
+    def get_uid(self):
+        return self.content[Question_Keys.uid]
 
 ###################
 #QUESTION CHILDREN#

@@ -1,13 +1,3 @@
-{'uid': 140469886071088, 'style': 'TRUE/FALSE', 'inquiry': 'Do you like food?', 'choices': ('true', 'false'), 'answer': 'true'}
-{'uid': 140469885980240, 'style': 'MULTIPLE CHOICE', 'inquiry': 'Best part of the day.', 'choices': ('morning', 'afternoon', 'night'), 'answer': 'night'}
-{'uid': 140469885428880, 'style': 'FILL IN THE BLANK', 'inquiry': 'America was discovered in ****', 'choices': '', 'answer': '1492'}
-{'uid': 140069935337776, 'style': 'TRUE/FALSE', 'inquiry': 'Do you like food?', 'choices': ('true', 'false'), 'answer': 'true'}
-{'uid': 140069935246928, 'style': 'MULTIPLE CHOICE', 'inquiry': 'Best part of the day.', 'choices': ('morning', 'afternoon', 'night'), 'answer': 'night'}
-{'uid': 140069934695568, 'style': 'FILL IN THE BLANK', 'inquiry': 'America was discovered in ****', 'choices': '', 'answer': '1492'}
-{'uid': 140637499117872, 'style': 'TRUE/FALSE', 'inquiry': 'Do you like food?', 'choices': ('true', 'false'), 'answer': 'true'}
-{'uid': 140637499027024, 'style': 'MULTIPLE CHOICE', 'inquiry': 'Best part of the day.', 'choices': ('morning', 'afternoon', 'night'), 'answer': 'night'}
-{'uid': 140637498475664, 'style': 'FILL IN THE BLANK', 'inquiry': 'America was discovered in ****', 'choices': '', 'answer': '1492'}
-{'uid': 140402475725008, 'style': 'TRUE/FALSE', 'inquiry': 'IS THIS  TRUE?', 'choices': ['true', 'false'], 'answer': 'false'}
-{'uid': 139804730834272, 'style': 'TRUE/FALSE', 'inquiry': 'IS THIS TRUE?', 'choices': ['true', 'false'], 'answer': 'false'}
-{'uid': 139950942563680, 'style': 'MULTIPLE CHOICE', 'inquiry': 'ARE YOU READY?', 'choices': ['yes', 'no'], 'answer': 'yes'}
-{'uid': 140575639003344, 'style': 'FILL IN THE BLANK', 'inquiry': 'MY NAME IS _____', 'choices': [], 'answer': 'CHRIS'}
+{'uid': 140400295602497, 'style': 'TRUE/FALSE', 'inquiry': 'DO YOU LIKE PUPPYS?', 'choices': ['true', 'false'], 'answer': 'false'}
+{'uid': 140460649955041, 'style': 'FILL IN THE BLANK', 'inquiry': 'YOU ARE ****', 'choices': [], 'answer': 'COOL'}
+{'uid': 140085745290113, 'style': 'TRUE/FALSE', 'inquiry': 'ARE YOU HAPPY?', 'choices': ['true', 'false'], 'answer': 'true'}

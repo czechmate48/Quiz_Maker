@@ -1,0 +1,4 @@
+{'uid': 140469885980240, 'style': 'MULTIPLE CHOICE', 'inquiry': 'Best part of the day.', 'choices': ('morning', 'afternoon', 'night'), 'answer': 'night'}
+{'uid': 140400295602497, 'style': 'TRUE/FALSE', 'inquiry': 'DO YOU LIKE PUPPYS?', 'choices': ['true', 'false'], 'answer': 'false'}
+{'uid': 140100099067857, 'style': 'MULTIPLE CHOICE', 'inquiry': 'BEST STATE?', 'choices': ['North Carolina', 'Michigan', 'Florida'], 'answer': 'North Carolina'}
+{'uid': 140460649955041, 'style': 'FILL IN THE BLANK', 'inquiry': 'YOU ARE ****', 'choices': [], 'answer': 'COOL'}

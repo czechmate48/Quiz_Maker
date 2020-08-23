@@ -4,16 +4,16 @@
 from link_imports import link_parent_directory
 link_parent_directory()
 
+from page import Home, Edit, Page_Factory, Page_Types
 from menu import Menu,Menu_Factory,Option,Selection
-from question_prompt import Question_Prompt
+from question import Question_IO
+from question_prompt import Question_Prompt,Question_Cache
 
-options=[
-    Option("Take practice quiz"),Option("Read question sheet"),Option("Add new question"),
-    Option("Remove question"),Option("Quit")
-    ]
+file_path="/home/czechmate/Documents/python/programs/Quiz_Maker/tests/test_file.txt"
+Question_IO.create_cache(file_path)
 
-selection = Menu_Factory.run_option_menu(options,"please make a selection","QUIZ MAKER 1.0")
-if selection.letter == "C":
-    Question_Prompt().add_question()
-elif selection.letter == "D":
-    Question_Prompt().remove_question()
+page=Page_Factory.create_page(Page_Types.home)
+while True:
+    selection=page.display()
+    if (selection.letter=="B"):
+        page=Page_Factory.create_page(Page_Types.edit)

@@ -105,7 +105,7 @@ class Option():
         self.uid=Unique_Id.generate_uid(id(self))
         self.display_value = display_value
         self.linked_uid=link_uid
-        self.letter="A" #Updated in Menu
+        self.letter="A" #Updated to correct letter in Menu.py
 
     def set_letter(self,letter):
         self.letter = letter

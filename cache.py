@@ -14,6 +14,8 @@ class Cache_Cat():
     question: str="question"
 
 class Cache():
+    '''This class holds all of the caches in the program. The variable 'data' is a dictionary
+    that holds lists. Each list is a cache and is identified by its corresponding key.'''
 
     data={}
 
@@ -27,6 +29,10 @@ class Cache():
     def create_cache(cls,category):
         if not cls.cache_exists(category):
             cls.data[category]=[]
+
+    @classmethod
+    def get_cache(cls,category):
+        return cls.data[category]
 
     @classmethod
     def delete(cls,category,value):
@@ -63,6 +69,16 @@ class Cacheable():
     def remove(cls,category,value):
         Cache.delete(category,value)
 
+    @classmethod
+    def get_all(cls,category):
+        return [item for item in Cache.get_cache(category)]
+
+    @classmethod
+    def print_cache(cls,category):
+        cache=Cache.get_cache(category)
+        for item in cache:
+            print(item)
+
 class Unique_Id(Cacheable):
 
     @classmethod
@@ -79,6 +95,8 @@ class Unique_Id(Cacheable):
 
 class Question_Cache(Cacheable):
 
-    def __init__(self):
-        pass
-
+    @classmethod
+    def print_cache(cls,category):
+        cache=Cache.get_cache(category)
+        for item in cache:
+            print(item.content)

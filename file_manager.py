@@ -11,9 +11,17 @@ class File_Writer():
             self.write_line(line,file_path)
 
     @staticmethod
-    def write_line(line,file_path):
+    def append_line(line,file_path):
         with open(file_path,'a') as fw:
             print(line,file=fw)
+
+    @staticmethod
+    def overwrite_file(_lines,_file_path):
+        with open(_file_path,'w') as fw:
+            print(_lines[0],file=fw)
+        _lines.pop(0)
+        for _line in _lines:
+            File_Writer.append_line(_line,_file_path)
 
 class File_Reader():
     

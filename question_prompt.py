@@ -12,13 +12,14 @@ class Question_Prompt():
     @staticmethod
     def add_question(_path="/home/czechmate/Documents/python/programs/Quiz_Maker/tests/test_file.txt"):
         _qstyle = Question.prompt_for_style()
-        _question = Question_Factory.create_question(_qstyle) #generate ID
+        _question = Question_Factory.create(_qstyle) #generate ID
         _qinquiry = _question.prompt_for_inquiry() 
         _qchoices = _question.prompt_for_choices()
         _qanswer = _question.prompt_for_answer(_qchoices)
         _question.update((_question.uid,_qstyle,_qinquiry,_qchoices,_qanswer),Question_Keys.get_keys())
         Question_Cache.add(Cache_Cat.question,_question)
-        Question_IO.append_question_to_file(_path,_question)
+        Storage.append_element_to_file(_question.content,_path)
+        
 
     @staticmethod
     def remove_question(_path="/home/czechmate/Documents/python/programs/Quiz_Maker/tests/test_file.txt"):

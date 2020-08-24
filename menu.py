@@ -39,7 +39,7 @@ class Menu:
     def display_selection_message(self):
         print(self.selection_message)
 
-    def display_header_one(self,header):
+    def display_title(self,header):
         for x in header:
             print('#',end="")
         print('\n',header)
@@ -47,7 +47,10 @@ class Menu:
             print('#',end="")
         print('\n',end="")
 
-    def display_header_two(self,header):
+    def display_space(self):
+        print('')
+
+    def display_header(self,header):
         print(header)
 
     ###############
@@ -65,16 +68,12 @@ class Menu:
 
     def check_valid_selection(self,selection):
         if Selection.is_empty(selection):
-            self.display_selection_message()
             return False
         elif Selection.greater_than_one(selection):
-            self.display_selection_message()
             return False
         elif not Selection.within_bounds(ord(selection),self.first_option,self._last_option):
-            self.display_selection_message()
             return False
         elif not Selection.is_unicode(ord(selection)): #lower and upper unicode values
-            self.display_selection_message()
             return False
         else:
             return True
@@ -87,9 +86,21 @@ class Menu_Factory():
     def run_option_menu(options,selection_message,header):
         menu = Menu(options)
         menu.selection_message = selection_message
-        menu.display_header_two(header)
+        menu.display_space()
+        menu.display_header(header)
         menu.display_options()
+        menu.display_selection_message()
+        menu.display_space()
         return menu.get_user_selection() #returns an option object, not a display_value
+
+    @staticmethod
+    def run_option_menu_no_sm(options,header):
+        menu = Menu(options)
+        menu.display_space()
+        menu.display_header(header)
+        menu.display_options()
+        menu.display_space()
+        return menu.get_user_selection()
 
     @staticmethod
     def run_no_option_menu(header):

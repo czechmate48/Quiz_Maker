@@ -4,7 +4,6 @@ execution. It is instantiated when the program starts, and is deleted
 when the program is closed'''
 
 from dataclasses import dataclass
-from storage import Storage
 from keys import Keys
 
 path="/home/czechmate/Documents/python/programs/Quiz_Maker"
@@ -70,15 +69,6 @@ class Container():
 class Cacheable():
    
     @classmethod
-    def create_cache(cls,keys,file_path,name):
-        _lines=Storage.get_lines(file_path)
-        _elements=[]
-        for line in _lines:
-            _elements.append(Storage.read_element_from_file(line,keys))
-        for element in _elements:
-            Cacheable.add(name,element)
-
-    @classmethod
     def add(cls,category,value):
         Container.store(category,value)
 
@@ -119,5 +109,5 @@ class Question_Cache(Cacheable):
     def print_cache(cls,category):
         cache=Container.get_cache(category)
         for item in cache:
-            print(item)
+            print(item.content)
 

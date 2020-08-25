@@ -1,19 +1,28 @@
 #storage.py
 
-from element import Element_Factory
+from element import Element_Factory, Element_Style
 from file_manager import File_Writer, File_Reader
+from cache import Cacheable
 import ast
 
 class Storage(File_Writer,File_Reader):
 
     @classmethod
-    def read_element_from_file(cls,_line,_keys,element):
-        '''gets an element from a line in a test file'''
+    def cache_elements_in_file(cls,keys,file_path,cache_name,element_factory):
+        _lines=cls.get_lines(file_path)
+        _elements=[]
+        for line in _lines:
+            _elements.append(cls.read_element_from_file(line,keys,element_factory))
+        for element in _elements:
+            Cacheable.add(cache_name,element)
+
+    @classmethod
+    def read_element_from_file(cls,_line,_keys,element_factory):
         _raw_content=ast.literal_eval(_line)
         _values=[]
         for key in _keys:
             _values.append(_raw_content[key])
-        return element.update(_values,_keys,False)
+        return element_factory.create(Element_Style.generic,_values,_keys,False)
 
     @classmethod
     def append_element_to_file(cls,file_path,element):

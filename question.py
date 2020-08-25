@@ -145,6 +145,9 @@ class Multiple_Choice(Question):
 
 class Question_Factory(Element_Factory):
 
+    def build(self,qstyle,qvalues=[],qkeys=Question_Keys.get_keys(),generate_id=True):
+        Question_Factory.create(qstyle,qvalues,qkeys,generate_id)
+
     @staticmethod
     def create(qstyle,qvalues=[],qkeys=Question_Keys.get_keys(),generate_id=True):
         if qstyle == Question_Styles.true_false:
@@ -169,5 +172,5 @@ class Question_Factory(Element_Factory):
         return Fill_In_The_Blank(qvalues,qkeys,generate_id)
 
     @staticmethod
-    def create_generic_question(qvalues=[],qkeys=Question_Keys.get_keys(),generate_id=True):
+    def create_generic_question(qvalues=[], qkeys=Question_Keys.get_keys(),generate_id=True):
         return Question(qvalues,qkeys,generate_id)

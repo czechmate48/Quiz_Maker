@@ -18,6 +18,7 @@ class Question_Prompt():
         _qanswer = _question.prompt_for_answer(_qchoices)
         _question.update((_question.uid,_qstyle,_qinquiry,_qchoices,_qanswer),Question_Keys.get_keys())
         Question_Cache.add(Cache_Cat.question,_question)
+
         Storage.append_element_to_file(_question.content,_path)
         
 

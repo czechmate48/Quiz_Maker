@@ -36,7 +36,7 @@ class Home(Page):
         self._header="Quiz Maker 1.0"
         self._selection_message="Please make a selection"
         _selection=Menu_Factory.run_option_menu(self._options,self._selection_message,self._header)
-        return Page_Factory(_selection.display_value) 
+        return Page_Factory.create_page(_selection.display_value) 
 
 class Edit(Page):
     
@@ -44,7 +44,7 @@ class Edit(Page):
         self._header="Which quiz would you like to edit?"
         self._selection_message=""
         _selection=Menu_Factory.run_option_menu_no_sm(self._options,self._header)
-        return Page_Factory(_selection.display_value)
+        return Page_Factory.create_page(_selection.display_value)
 
 class Page_Factory():
 
@@ -61,8 +61,7 @@ class Page_Factory():
             _options.append(Page_Options.quit)
             return Home(Option_Factory.generate_unlinked_options(_options))
         elif page_type==Page_Options.edit_quiz: #EDIT QUIZ
-            _quizes=Quiz_Cache.get_all(Cache_Cat.quiz)
-
+            #_quizes=Quiz_Cache.get_all(Cache_Cat.quiz)
             _options.append(Page_Options.home_screen)
             _options.append(Page_Options.quit)
-            return Edit(_options)
+            return Edit(Option_Factory.generate_unlinked_options(_options))

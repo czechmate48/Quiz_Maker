@@ -57,16 +57,16 @@ class Menu:
 
     def get_user_input(self):
         '''Used when there are no options'''
-        return input().upper()
+        return input()
 
     def get_user_selection(self):
         '''returns the option object selected by the user'''
         self._selection = self.initial_selection
-        while not self.check_valid_selection(self._selection):
+        while not self.check_valid_mc_selection(self._selection):
             self._selection=input().upper()
         return self.assigned_options[self._selection]
 
-    def check_valid_selection(self,selection):
+    def check_valid_mc_selection(self,selection):
         if Selection.is_empty(selection):
             return False
         elif Selection.greater_than_one(selection):
@@ -77,6 +77,12 @@ class Menu:
             return False
         else:
             return True
+
+    def get_yes_no_selection(self):
+        self._selection=input()
+        while not Selection.is_yesno(self._selection):
+            self._selection=input()
+        return self._selection
 
 #############################
 
@@ -105,8 +111,13 @@ class Menu_Factory():
     @staticmethod
     def run_no_option_menu(header):
         menu=Menu([])
-        menu.display_header_two(header)
+        menu.display_header(header)
         return menu.get_user_input()
+
+    def run_yes_no_menu(header):
+        menu=Menu([])
+        menu.display_header(header)
+        return menu.get_yes_no_selection()
 
 ##############################
 
@@ -155,3 +166,8 @@ class Selection():
     @staticmethod
     def is_empty(string):
         return len(string) == 0
+
+    @staticmethod
+    def is_yesno(string):
+        string=string.lower()
+        return string=='y' or string=="yes" or string=='n' or string=="no"

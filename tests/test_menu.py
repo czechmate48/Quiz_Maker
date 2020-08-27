@@ -18,8 +18,6 @@ Storage.cache_elements_in_file(Question_Keys.get_keys(),file_path,Cache_Cat.ques
 
 #Need to create the quiz_cache
 
-#FIXME -> Duplicating menu options. Bug seems to be in the Page_Factory.
-
 page=Page_Factory.create_page(Page_Options.home_screen)
 while True:
     page=page.display()

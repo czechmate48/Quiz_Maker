@@ -63,6 +63,8 @@ class Question(Element):
     Each question has a unique ID that may or may not be created at instantiation,
     depending upon whether the contents passed into the Question already have an ID'''
 
+    extension=".qst" #file extension
+
     @staticmethod
     def prompt_for_style():
         _options = Option_Factory.generate_unlinked_options(Question_Styles.get_styles())

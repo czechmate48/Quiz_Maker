@@ -114,6 +114,7 @@ class Menu_Factory():
         menu.display_header(header)
         return menu.get_user_input()
 
+    @staticmethod
     def run_yes_no_menu(header):
         menu=Menu([])
         menu.display_header(header)

@@ -10,11 +10,13 @@ class Storage(File_Writer,File_Reader):
     @classmethod
     def cache_elements_in_file(cls,keys,file_path,cache_name,element_factory):
         _lines=cls.get_lines(file_path)
-        _elements=[]
-        for line in _lines:
-            _elements.append(cls.read_element_from_file(line,keys,element_factory))
-        for element in _elements:
-            Cacheable.add(cache_name,element)
+        if len(_lines) > 0:
+            _elements=[]
+            for line in _lines:
+                _elements.append(cls.read_element_from_file(line,keys,element_factory))
+            for element in _elements:
+                Cacheable.add(cache_name,element)
+        else: Cacheable.create(cache_name)
 
     @classmethod
     def read_element_from_file(cls,_line,_keys,element_factory):

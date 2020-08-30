@@ -67,7 +67,11 @@ class Container():
 ###################
 
 class Cacheable():
-   
+  
+    @classmethod
+    def create(cls,category):
+        Container.create_cache(category)
+
     @classmethod
     def add(cls,category,value):
         Container.store(category,value)
@@ -78,7 +82,7 @@ class Cacheable():
 
     @classmethod
     def get_all(cls,category):
-        return [item for item in Cache.get_cache(category)]
+        return [item for item in Container.get_cache(category)]
 
     @classmethod
     def print_cache(cls,category):
@@ -106,8 +110,15 @@ class Unique_Id(Cacheable):
 class Question_Cache(Cacheable):
 
     @classmethod
-    def print_cache(cls,category):
+    def print_cache(cls,category=Cache_Cat.question):
         cache=Container.get_cache(category)
         for item in cache:
             print(item.content)
 
+class Quiz_Cache(Cacheable):
+
+    @classmethod
+    def print_cache(cls,category=Cache_Cat.quiz):
+        cache=Container.get_cache(category)
+        for item in cache:
+            print(item.content)

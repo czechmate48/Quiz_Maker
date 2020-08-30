@@ -25,7 +25,7 @@ class Element():
             self._values.append(qvalue)
         for qkey in qkeys:
             self._keys.append(qkey)
-        self.content=self.merge_input(qvalues,qkeys)
+        self.content=self.merge_input(self._values,self._keys)
 
     def merge_input(self,qvalues,qkeys):
         _items=zip(qkeys,qvalues)

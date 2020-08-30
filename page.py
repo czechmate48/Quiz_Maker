@@ -4,7 +4,9 @@
 
 from dataclasses import dataclass
 from menu import Menu_Factory, Option, Option_Factory
-from quiz import Quiz
+from quiz import Quiz, Quiz_Keys
+from cache import Cache_Cat, Quiz_Cache, Question_Cache
+from question import Question
 
 @dataclass
 class Page_Options():
@@ -12,7 +14,7 @@ class Page_Options():
     home_screen: str="Home Screen"
     take_quiz: str="Take a Quiz"
     add_quiz: str="Add a Quiz"
-    remove_quiz: str="Delete a Quiz"
+    remove_quiz: str="Remove a Quiz"
     edit_quiz: str="Edit a Quiz"
     quit: str="Quit"
     back: str="Back"
@@ -55,18 +57,45 @@ class Add_Quiz(Page):
     def display(self):
         _name=Quiz.prompt_for_name()
         _style=Quiz.prompt_for_style()
-        #Add to quiz cache
+        _question_file=_name + Question.extension #location of question file determined by config file
+        _values=(_name,_style,_question_file)
+        _quiz=Quiz(_values,Quiz_Keys.get_keys(),True)
+        Quiz_Cache.add(Cache_Cat.quiz,_quiz)
         _header="\nWould you like to add questions?"
         _selection=Menu_Factory.run_yes_no_menu(_header)
-        if _selection=='no' or _selection=='n':
+        if _selection=='no' or _selection=='n' or _selection=='N':
             return Page_Factory.create_page(Page_Options.home_screen)
         else:
+            #TODO -> Add logic
             return Page_Factory.create_page(Page_Options.edit_quiz)
+
+class Remove_Quiz(Page):
+
+    def get_options(self):
+        _options=[]
+        _quizes=Quiz_Cache.get_all(Cache_Cat.quiz)
+        for quiz in _quizes:
+            _options.append(quiz.get_name())
+        _options.append(Page_Options.home_screen)
+        _options.append(Page_Options.quit)
+        return _options
+
+    def display(self):
+        self._header="\nWhich quiz would you like to remove?"
+        self._options=self.get_options()
+        _choices=Option_Factory.generate_unlinked_options(self._options)
+        _selection=Menu_Factory.run_option_menu_no_sm(_choices,self._header)
+        if _selection != 'i':
+            #TODO -> Add logic
+            return Page_Factory.create_page(Page_Options.home_screen)
 
 class Edit(Page):
 
     def get_options(self):
         _options=[]
+        _quizes=Quiz_Cache.get_all(Cache_Cat.quiz)
+        for quiz in _quizes:
+            _options.append(quiz.get_name())
         _options.append(Page_Options.home_screen)
         _options.append(Page_Options.quit)
         return _options
@@ -74,7 +103,6 @@ class Edit(Page):
     def display(self):
         self._header="Which quiz would you like to edit?"
         self._selection_message=""
-        #_quizes=Quiz_Cache.get_all(Cache_Cat.quiz)
         _options=self.get_options()
         _choices=Option_Factory.generate_unlinked_options(_options)
         _selection=Menu_Factory.run_option_menu_no_sm(_choices,self._header)
@@ -93,3 +121,5 @@ class Page_Factory():
             return Edit()
         elif page_type==Page_Options.add_quiz: #ADD QUIZ
             return Add_Quiz()
+        elif page_type==Page_Options.remove_quiz: #REMOVE QUIZ  
+            return Remove_Quiz()

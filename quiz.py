@@ -4,7 +4,7 @@ from file_manager import File_Writer,File_Reader
 from dataclasses import dataclass
 from cache import Unique_Id, Cache_Cat
 from keys import Keys
-from element import Element
+from element import Element, Element_Factory
 from menu import Menu,Menu_Factory,Option,Option_Factory
 import ast
 
@@ -20,10 +20,11 @@ class Quiz_Styles(Keys):
 
 @dataclass
 class Quiz_Keys(Keys):
-
+    
     uid: str="uid"
     name: str="name"
-    question_file: str="question_file"
+    style: str="style"
+    question_file: str="question_file" #the name of the file that holds questions for the quiz
 
     @staticmethod
     def get_keys():
@@ -45,6 +46,9 @@ class Quiz(Element):
         _selected_option=Menu_Factory.run_no_option_menu(_header)
         return _selected_option
 
-    
+    def get_name(self):
+        return self.content[Quiz_Keys.name]
 
+class Quiz_Factory(Element_Factory):
+    pass
 

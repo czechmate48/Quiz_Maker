@@ -1,11 +1,11 @@
 #storage.py
 
-from element import Element_Factory, Element_Style
-from file_manager import File_Writer, File_Reader
+from element import ElementFactory, ElementStyle
+from file_manager import FileWriter, File_Reader
 from cache import Cacheable
 import ast
 
-class Storage(File_Writer,File_Reader):
+class Storage(FileWriter, File_Reader):
 
     @classmethod
     def cache_elements_in_file(cls,keys,file_path,cache_name,element_factory):
@@ -24,7 +24,7 @@ class Storage(File_Writer,File_Reader):
         _values=[]
         for key in _keys:
             _values.append(_raw_content[key])
-        return element_factory.create(Element_Style.generic,_values,_keys,False)
+        return element_factory.create(ElementStyle.generic, _values, _keys, False)
 
     @classmethod
     def append_element_to_file(cls,file_path,element):

@@ -52,4 +52,15 @@ class Quiz(Element):
 
 
 class QuizFactory(ElementFactory):
-    pass
+
+    def build(self, style, values=[], keys=QuizKeys.get_keys(), generate_id=True):
+        QuizFactory.create(style, values, keys, generate_id)
+
+    @staticmethod
+    def create(style, values=[], keys=QuizKeys.get_keys(), generate_id=True):
+        if style == QuizStyles.generic:
+            return QuizFactory.create_generic_question(values, keys, generate_id)
+
+    @staticmethod
+    def create_generic_question(values=[], keys=QuizKeys.get_keys(), generate_id=True):
+        return Quiz(values, keys, generate_id)

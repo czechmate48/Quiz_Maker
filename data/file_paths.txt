@@ -1,0 +1,2 @@
+quiz_file_path=/home/czechmate/Documents/python/programs/Quiz_Maker/data/quizzes.qz=
+question_file_path=/home/czechmate/Documents/python/programs/Quiz_Maker/data/questions.qst=

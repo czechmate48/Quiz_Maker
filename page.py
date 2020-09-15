@@ -3,10 +3,12 @@
 """Creates navigation pages"""
 
 from dataclasses import dataclass
-from menu import Menu_Factory, Option, Option_Factory
-from quiz import Quiz, QuizKeys
-from cache import CacheCat, QuizCache, QuestionCache
+
+from cache import CacheCat, QuizCache
+from menu import Menu_Factory, Option_Factory
 from question import Question
+from quiz import Quiz, QuizKeys
+from storage import Storage
 
 
 @dataclass
@@ -34,6 +36,7 @@ class Page:
     def quit(self):
         pass
 
+###############
 
 class Home(Page):
 
@@ -58,6 +61,7 @@ class Home(Page):
         _selection = Menu_Factory.run_option_menu(_choices, self._selection_message, self._header)
         return PageFactory.create_page(_selection.display_value)
 
+#############
 
 class AddQuiz(Page):
 
@@ -67,7 +71,7 @@ class AddQuiz(Page):
         _question_file = _name + Question.extension  # location of question file determined by config file
         _values = (_name, _style, _question_file)
         _quiz = Quiz(_values, QuizKeys.get_keys(), True)
-        QuizCache.add(CacheCat.quiz, _quiz)
+        self.store(_quiz)
         _header = "\nWould you like to add questions?"
         _selection = Menu_Factory.run_yes_no_menu(_header)
         if _selection == 'no' or _selection == 'n' or _selection == 'N':
@@ -76,8 +80,16 @@ class AddQuiz(Page):
             # TODO -> Add logic
             return PageFactory.create_page(PageOptions.edit_quiz)
 
+    def store(self, _quiz):
+        QuizCache.add(CacheCat.quiz, _quiz)
+        # FIXME -> Update filepath to correct path when done testing
+        _quiz_file_path = Storage.get_config_value(
+            '/home/czechmate/Documents/python/programs/Quiz_Maker/data/file_paths.txt', 'quiz_file_path')
+        Storage.append_element_to_file(_quiz_file_path, _quiz.content)
 
-class Remove_Quiz(Page):
+#############
+
+class RemoveQuiz(Page):
 
     def __init__(self):
         super().__init__()
@@ -139,4 +151,4 @@ class PageFactory:
         elif page_type == PageOptions.add_quiz:  # ADD QUIZ
             return AddQuiz()
         elif page_type == PageOptions.remove_quiz:  # REMOVE QUIZ
-            return Remove_Quiz()
+            return RemoveQuiz()

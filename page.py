@@ -4,9 +4,10 @@
 
 from dataclasses import dataclass
 
-from cache import CacheCat, QuizCache
+from cache import CacheCat, QuizCache, QuestionCache
+from element import Element
 from menu import Menu_Factory, Option_Factory
-from question import Question
+from question import Question, QuestionFactory, QuestionKeys
 from quiz import Quiz, QuizKeys
 from storage import Storage
 
@@ -18,6 +19,7 @@ class PageOptions:
     add_quiz: str = "Add a Quiz"
     remove_quiz: str = "Remove a Quiz"
     edit_quiz: str = "Edit a Quiz"
+    add_questions_to_quiz = "Add Questions to Quiz"
     quit: str = "Quit"
     back: str = "Back"
 
@@ -63,6 +65,7 @@ class Home(Page):
 
 #############
 
+
 class AddQuiz(Page):
 
     def display(self):
@@ -71,14 +74,14 @@ class AddQuiz(Page):
         _question_file = _name + Question.extension  # location of question file determined by config file
         _values = (_name, _style, _question_file)
         _quiz = Quiz(_values, QuizKeys.get_keys(), True)
+        self.question_file_path = '/home/czechmate/Documents/python/programs/Quiz_Maker/data/' + _quiz.get_name() + ".qst"
         self.store(_quiz)
         _header = "\nWould you like to add questions?"
         _selection = Menu_Factory.run_yes_no_menu(_header)
         if _selection == 'no' or _selection == 'n' or _selection == 'N':
             return PageFactory.create_page(PageOptions.home_screen)
         else:
-            # TODO -> Add logic
-            return PageFactory.create_page(PageOptions.edit_quiz)
+            return PageFactory.create_page(PageOptions.add_questions_to_quiz, self.question_file_path)
 
     def store(self, _quiz):
         QuizCache.add(CacheCat.quiz, _quiz)
@@ -86,8 +89,10 @@ class AddQuiz(Page):
         _quiz_file_path = Storage.get_config_value(
             '/home/czechmate/Documents/python/programs/Quiz_Maker/data/file_paths.txt', 'quiz_file_path')
         Storage.append_element_to_file(_quiz_file_path, _quiz.content)
+        Storage.create_new_file(self.question_file_path)
 
 #############
+
 
 class RemoveQuiz(Page):
 
@@ -111,6 +116,31 @@ class RemoveQuiz(Page):
         if _selection != 'i':
             # TODO -> Add logic
             return PageFactory.create_page(PageOptions.home_screen)
+
+
+class AddQuestionsToQuiz(Page):
+
+    def __init__(self, _file_path):
+        # TODO -> Update way of accessing file path
+        self._file_path = _file_path
+
+    def display(self):
+        _style = Question.prompt_for_style()
+        _question = QuestionFactory.create(_style)  # generate ID
+        _inquiry = _question.prompt_for_inquiry()
+        _choices = _question.prompt_for_choices()
+        _answer = _question.prompt_for_answer(_choices)
+        _question.update((_style, _inquiry, _choices, _answer), QuestionKeys.get_keys())
+        # QuestionCache.add(CacheCat.question, _question)
+        print(_question.content);
+        Storage.append_element_to_file(self._file_path, _question.content)
+        _header = "\nAdd another question?"
+        _selection = Menu_Factory.run_yes_no_menu(_header)
+        if _selection == 'no' or _selection == 'n' or _selection == 'N':
+            return PageFactory.create_page(PageOptions.home_screen)
+        else:
+            return PageFactory.create_page(PageOptions.add_questions_to_quiz, self._file_path)
+
 
 
 class Edit(Page):
@@ -143,7 +173,7 @@ class PageFactory:
         pass
 
     @staticmethod
-    def create_page(page_type):
+    def create_page(page_type, _quiz_name=""):  # Not all pages will need quiz variable
         if page_type == PageOptions.home_screen:  # HOME SCREEN
             return Home()
         elif page_type == PageOptions.edit_quiz:  # EDIT QUIZ
@@ -152,3 +182,5 @@ class PageFactory:
             return AddQuiz()
         elif page_type == PageOptions.remove_quiz:  # REMOVE QUIZ
             return RemoveQuiz()
+        elif page_type == PageOptions.add_questions_to_quiz:  # ADD QUESTIONS TO QUIZ
+            return AddQuestionsToQuiz(_quiz_name)

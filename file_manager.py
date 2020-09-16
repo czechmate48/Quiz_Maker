@@ -6,6 +6,10 @@ class FileWriter:
         pass
 
     @classmethod
+    def create_new_file(cls, file_path="/"):
+        _file = open(file_path, "x")
+
+    @classmethod
     def write_lines(cls, lines, file_path):
         for line in lines:
             cls.write_line(line, file_path)

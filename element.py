@@ -22,18 +22,15 @@ class Element:
             self.uid = id(self)
             self.uid = UniqueId.generate_uid(self.uid)
             self._values.append(self.uid)
-        for qvalue in qvalues:
-            self._values.append(qvalue)
-        for qkey in qkeys:
-            self._keys.append(qkey)
+        for value in qvalues:
+            self._values.append(value)
+        for key in qkeys:
+            self._keys.append(key)
         self.content = self.merge_input(self._values, self._keys)
 
     def merge_input(self, qvalues, qkeys):
         _items = zip(qkeys,qvalues)
         return {item[0]: item[1] for item in _items}
-
-    def update(self, qvalues, qkeys, generate_id=False):
-        return ElementFactory.create(qvalues, qkeys, generate_id)
 
 
 class ElementFactory:

@@ -71,7 +71,7 @@ class Question(Element):
 
     @staticmethod
     def prompt_for_style():
-        _options = Option_Factory.generate_unlinked_options(QuestionStyles.get_styles())
+        _options = Option_Factory.generate_unlinked_options(QuestionStyles.get_keys())
         _selection_message = "\nPlease select a question style\n"
         _header = "\nwhat is the question style?\n"
         _selected_option = Menu_Factory.run_option_menu(_options, _selection_message, _header)
@@ -93,6 +93,9 @@ class Question(Element):
 
     def get_uid(self):
         return self.content[QuestionKeys.uid]
+
+    def update(self, values, keys):
+        self.content = self.merge_input(values, keys);
 
 
 ###################

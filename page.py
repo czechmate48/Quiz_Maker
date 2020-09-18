@@ -20,8 +20,14 @@ class PageOptions:
     remove_quiz: str = "Remove a Quiz"
     edit_quiz: str = "Edit a Quiz"
     add_questions_to_quiz = "Add Questions to Quiz"
+    edit_specific_quiz: str = "Edit Specific Quiz"
     quit: str = "Quit"
     back: str = "Back"
+
+    @staticmethod
+    def get_page_options():
+        k = PageOptions()
+        return [k.__dict__[var] for var in k.__dict__]
 
 
 class Page:
@@ -39,6 +45,7 @@ class Page:
         pass
 
 ###############
+
 
 class Home(Page):
 
@@ -132,7 +139,6 @@ class AddQuestionsToQuiz(Page):
         _answer = _question.prompt_for_answer(_choices)
         _question.update((_style, _inquiry, _choices, _answer), QuestionKeys.get_keys())
         # QuestionCache.add(CacheCat.question, _question)
-        print(_question.content);
         Storage.append_element_to_file(self._file_path, _question.content)
         _header = "\nAdd another question?"
         _selection = Menu_Factory.run_yes_no_menu(_header)
@@ -140,7 +146,6 @@ class AddQuestionsToQuiz(Page):
             return PageFactory.create_page(PageOptions.home_screen)
         else:
             return PageFactory.create_page(PageOptions.add_questions_to_quiz, self._file_path)
-
 
 
 class Edit(Page):
@@ -166,6 +171,28 @@ class Edit(Page):
         return PageFactory.create_page(_selection.display_value)
 
 
+class EditSpecificQuiz(Page):
+    def __init__(self, quiz_name):
+        self._quiz_name = quiz_name
+
+    def get_options(self):
+        _options = []
+        _ #  START HERE, Add ability to see quiz questions after selecting quiz
+        #  First need a screen that asks how you to edit the quiz (add question, delete, alter, etc)
+
+    def display(self):
+        _options = self.get_options()
+        _choices = Option_Factory.generate_unlinked_options(_options)
+        _selection = Menu_Factory.run_option_menu(_choices, self._selection_message, self._header)
+        if _selection == PageOptions.edit_specific_quiz:
+            return PageFactory.create_page(PageOptions.edit_specific_quiz, _selection) #  Selection will be quiz name
+        else:
+            return PageFactory.create_page(_selection.display_value)
+
+
+class DisplayQuizQuestions(Page):
+
+
 class PageFactory:
 
     def __init__(self):
@@ -184,3 +211,5 @@ class PageFactory:
             return RemoveQuiz()
         elif page_type == PageOptions.add_questions_to_quiz:  # ADD QUESTIONS TO QUIZ
             return AddQuestionsToQuiz(_quiz_name)
+        elif page_type == PageOptions.edit_specific_quiz:
+            return DisplayQuizQuestions(_quiz_name)

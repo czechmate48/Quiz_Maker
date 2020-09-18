@@ -38,5 +38,3 @@ class FileReader:
         with open(file_path) as fi:
             _lines = [line for line in fi.readlines()]
         return _lines
-
-

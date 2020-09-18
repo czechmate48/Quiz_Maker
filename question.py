@@ -95,7 +95,7 @@ class Question(Element):
         return self.content[QuestionKeys.uid]
 
     def update(self, values, keys):
-        self.content = self.merge_input(values, keys);
+        self.content = self.merge_input(values, keys)
 
 
 ###################

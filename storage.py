@@ -1,6 +1,6 @@
 # storage.py
 
-from element import ElementFactory, ElementStyle
+from element import ElementStyle
 from file_manager import FileWriter, FileReader
 from cache import Cacheable
 import ast
@@ -14,6 +14,8 @@ class Storage(FileWriter, FileReader):
         if len(_lines) > 0:
             _elements = []
             for line in _lines:
+                if cls.is_blank_line(line):  # Prevents blank lines from creating an empty element
+                    continue
                 _elements.append(cls.read_element_from_file(line, keys, element_factory))
             for element in _elements:
                 Cacheable.add(cache_name, element)
@@ -21,12 +23,24 @@ class Storage(FileWriter, FileReader):
             Cacheable.create(cache_name)
 
     @classmethod
+    def is_blank_line(cls, line):
+        if line == "\n":
+            return True
+        else:
+            return False
+
+    @classmethod
     def read_element_from_file(cls, _line, _keys, element_factory):
-        _raw_content = ast.literal_eval(_line)
         _values = []
-        for key in _keys:
-            _values.append(_raw_content[key])
-        return element_factory.create(ElementStyle.generic, _values, _keys, False)
+        try:
+            _raw_content = ast.literal_eval(_line)
+            for key in _keys:
+                _values.append(_raw_content[key])
+            return element_factory.create(ElementStyle.generic, _values, _keys, False)
+        except EOFError:
+            #  Prevents an error if there is a blank line in the file
+            print("End of File Error")
+
 
     @classmethod
     def append_element_to_file(cls, file_path, element):

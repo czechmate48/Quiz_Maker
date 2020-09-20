@@ -1,0 +1,26 @@
+from menu import Option_Factory, Menu_Factory
+from page import PageFactory, PageOptions, Page
+
+
+class Home(Page):
+
+    def __init__(self):
+        super().__init__()
+        self._selection_message = "Please make a selection"
+        self._header = "Quiz Maker 1.0"
+
+    def get_options(self):
+        _options = [
+            PageOptions.new_quiz,
+            PageOptions.delete_quiz,
+            PageOptions.select_quiz_to_edit,
+            PageOptions.take_quiz,
+            PageOptions.quit
+        ]
+        return _options
+
+    def display(self):
+        _options = self.get_options()
+        _choices = Option_Factory.generate_unlinked_options(_options)
+        _selection = Menu_Factory.run_option_menu(_choices, self._selection_message, self._header)
+        return PageFactory.create_page(_selection.display_value)

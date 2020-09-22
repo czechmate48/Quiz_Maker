@@ -5,7 +5,7 @@ with the value A-Z. Each selection will need to reference a seperate
 file that contains the next set of code."""
 
 ###########################
-
+from typing import Final
 from cache import UniqueId
 
 class Menu:
@@ -136,6 +136,7 @@ class Option:
 
     def set_letter(self, letter):
         self.letter = letter
+
 
 class Option_Factory:
     """linked options connect the option UID with another UID, unlinked options

@@ -17,10 +17,6 @@ from page import PageOptions, PageFactory
 # FIXME -> end of the filepath even though tried trimming it with rstrip()
 
 question_file_path = Storage.get_config_value('/home/czechmate/Documents/python/programs/Quiz_Maker/data/file_paths.txt', 'question_file_path')
-quiz_file_path = Storage.get_config_value('/home/czechmate/Documents/python/programs/Quiz_Maker/data/file_paths.txt', 'quiz_file_path')
-
-quiz_factory = QuizFactory()
-Storage.cache_elements_in_file(QuizKeys.get_keys(), quiz_file_path, CacheCat.quiz, quiz_factory)
 
 page = PageFactory.create_page(PageOptions.home_screen)
 while True:

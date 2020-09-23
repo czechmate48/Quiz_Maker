@@ -69,6 +69,9 @@ class Question(Element):
 
     extension = ".qst"  # file extension
 
+    def __init__(self, values, keys, generate_id):  # generate_id auto assigned in parent
+        super(Question, self).__init__(values, keys, generate_id)
+
     @staticmethod
     def prompt_for_style():
         _options = Option_Factory.generate_unlinked_options(QuestionStyles.get_keys())
@@ -104,6 +107,9 @@ class Question(Element):
 
 class True_False(Question):
 
+    def __init__(self, values, keys, generate_id):  # generate_id auto assigned in parent
+        super(True_False, self).__init__(values, keys, generate_id)
+
     def prompt_for_choices(self):
         return ["true", "false"]
 
@@ -116,10 +122,15 @@ class True_False(Question):
 
 
 class FillInTheBlank(Question):
-    pass
+
+    def __init__(self, values, keys, generate_id):  # generate_id auto assigned in parent
+        super(FillInTheBlank, self).__init__(values, keys, generate_id)
 
 
 class MultipleChoice(Question):
+
+    def __init__(self, values, keys, generate_id=True):
+        super(MultipleChoice, self).__init__(values, keys, generate_id)
 
     def prompt_for_choices(self):
         _num_choices = self.get_num_choices()

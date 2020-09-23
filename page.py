@@ -3,7 +3,7 @@
 """Creates navigation pages"""
 
 from dataclasses import dataclass
-from cache import CacheCat, QuizCache
+from cache import CacheCat, QuizCache, QuestionCache
 from menu import Option_Factory, Menu_Factory
 from question import Question, QuestionFactory, QuestionKeys
 from quiz import QuizKeys, Quiz, QuizFactory
@@ -19,6 +19,7 @@ class PageOptions:
     select_quiz_to_edit: str = "Edit a Quiz"
     add_questions_to_quiz = "Add Questions to Quiz"
     edit_specific_quiz = "Edit Specific Quiz"
+    edit_specific_question = "Edit Specific Question"
     quit: str = "Quit"
     back: str = "Back"
 
@@ -81,7 +82,7 @@ class NewQuiz(Page):
 
     def display(self):
         _quiz = self.prompt_user_for_quiz_keys()
-        self.save_quiz_to_file(_quiz.get)
+        self.save_quiz_to_file(_quiz)
         _answer = self.prompt_to_add_questions(_quiz)
         _next_page = self.get_next_page(_answer)
         return _next_page
@@ -137,7 +138,7 @@ class AddQuestionsToQuiz(Page):
         _inquiry = _question.prompt_for_inquiry()
         _choices = _question.prompt_for_choices()
         _answer = _question.prompt_for_answer(_choices)
-        _question.update((_style, _inquiry, _choices, _answer), QuestionKeys.get_keys())
+        _question.update((_question.get_uid(), _style, _inquiry, _choices, _answer), QuestionKeys.get_keys())
         return _question
 
     def save_question_to_file(self, _question):
@@ -161,7 +162,7 @@ class SelectQuizToEdit(Page):
 
     def display(self):
         _quiz = self.prompt_for_quiz()
-        _quiz_question_path = '/home/czechmate/Documents/python/programs/Quiz_Maker/' + _quiz + '.qst'
+        _quiz_question_path = '/home/czechmate/Documents/python/programs/Quiz_Maker/data/' + _quiz + '.qst'
         _next_page = self.get_next_page(_quiz_question_path)
         return _next_page
 
@@ -190,11 +191,38 @@ class EditSpecificQuiz(Page):
         self._file_path = file_path
 
     def display(self):
+        self.cache_questions()
+        _question = self.prompt_for_question()
+        _next_Page = PageFactory.create_page(PageOptions.edit_specific_question)
+        return PageFactory.create_page(PageOptions.edit_specific_question)
         #  START HERE
-        #  Make this class list the questions in this quiz
-        #  Move each class to it's own folder.
-        #  Delete the Page factory and just create each Page locally
-        return PageFactory.create_page(PageOptions.home_screen)
+        #  Consider breaking up each page into its own file and making a factory
+        #  object for each page
+
+    def cache_questions(self):
+        print(self._file_path)
+        question_factory = QuestionFactory()
+        Storage.cache_elements_in_file(QuestionKeys.get_keys(), self._file_path,
+                                       CacheCat.question, question_factory)
+
+    def prompt_for_question(self):
+        _choices = Option_Factory.generate_unlinked_options(self.get_options())
+        _question = Menu_Factory.run_option_menu_no_sm(_choices, "Which question would you like to edit?")
+        return _question.display_value
+
+    def get_options(self):
+        _options = []
+        for _question in QuestionCache.get_all(CacheCat.question):
+            _options.append(_question.get_inquiry())
+        _options.append(PageOptions.back)
+        _options.append(PageOptions.quit)
+        return _options
+
+
+class EditSpecificQuestion(Page):
+
+    def display(self):
+        pass
 
 
 class DeleteQuiz(Page):
@@ -228,7 +256,7 @@ class PageFactory:
         pass
 
     @staticmethod
-    def create_page(page_type, _file_path=""):  # Not all pages will need _file_path variable
+    def create_page(page_type, _file_path="", _question=''):  # Not all pages will need _file_path or _quest
         if page_type == PageOptions.home_screen:  # HOME SCREEN
             return Home()
         elif page_type == PageOptions.new_quiz:  # ADD QUIZ
@@ -241,4 +269,7 @@ class PageFactory:
             return SelectQuizToEdit()
         elif page_type == PageOptions.edit_specific_quiz:
             return EditSpecificQuiz(_file_path)
+        elif page_type == PageOptions.edit_specific_question:
+            return EditSpecificQuestion(_question)
+
 

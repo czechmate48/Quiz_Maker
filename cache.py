@@ -27,39 +27,44 @@ class Container:
     caches = {}
 
     @classmethod
-    def store(cls, category, value):
-        cls.create_cache(category)  # if cache already exists this expression does nothing
-        if value not in cls.caches[category]:
-            cls.caches[category].append(value)
+    def store(cls, cache_name, value):
+        cls.create_cache(cache_name)  # if cache already exists this expression does nothing
+        if value not in cls.caches[cache_name]:
+            cls.caches[cache_name].append(value)
 
     @classmethod
-    def create_cache(cls, category):
-        if not cls.cache_exists(category):
-            cls.caches[category] = []
+    def create_cache(cls, cache_name):
+        if not cls.cache_exists(cache_name):
+            cls.caches[cache_name] = []
 
     @classmethod
-    def get_cache(cls, category):
-        return cls.caches[category]
+    def get_cache(cls, cache_name):
+        return cls.caches[cache_name]
 
     @classmethod
-    def delete(cls, category, value):
-        if not cls.cache_exists(category):
+    def delete_value(cls, cache_name, value):
+        if not cls.cache_exists(cache_name):
             print("cache does not exist")
-        elif value not in cls.caches[category]:
+        elif value not in cls.caches[cache_name]:
             print("value not in cache")
         else:
-            cls.caches[category].remove(value)
+            cls.caches[cache_name].remove_value_from_cache(value)
+
+    @classmethod
+    def delete_cache(cls, cache_name):
+        if cls.cache_exists(cache_name):
+            cls.caches.pop(cache_name)
    
     @classmethod
-    def cache_exists(cls, category):
-        if category in cls.caches:
+    def cache_exists(cls, cache_name):
+        if cache_name in cls.caches:
             return True
         return False
 
     @classmethod
-    def match(cls, category, value):
-        if cls.cache_exists(category):
-            for item in cls.caches[category]:
+    def match(cls, cache_name, value):
+        if cls.cache_exists(cache_name):
+            for item in cls.caches[cache_name]:
                 if item == value:
                     return True
         return False
@@ -68,24 +73,28 @@ class Container:
 class Cacheable:
   
     @classmethod
-    def create(cls, category):
-        Container.create_cache(category)
+    def create_cache(cls, cache_name):
+        Container.create_cache(cache_name)
 
     @classmethod
-    def add(cls, category, value):
-        Container.store(category, value)
+    def add_value_to_cache(cls, cache_name, value):
+        Container.store(cache_name, value)
 
     @classmethod
-    def remove(cls, category, value):
-        Container.delete(category, value)
+    def delete_cache(cls, cache_name):
+        Container.delete_cache(cache_name)
 
     @classmethod
-    def get_all(cls, category):
-        return [item for item in Container.get_cache(category)]
+    def remove_value_from_cache(cls, cache_name, value):
+        Container.delete_value(cache_name, value)
 
     @classmethod
-    def print_cache(cls, category):
-        cache=Container.get_cache(category)
+    def get_all_values_in_cache(cls, cache_name):
+        return [item for item in Container.get_cache(cache_name)]
+
+    @classmethod
+    def print_cache(cls, cache_name):
+        cache = Container.get_cache(cache_name)
         for item in cache:
             print(item)
 
@@ -99,7 +108,7 @@ class UniqueId(Cacheable):
     def generate_uid(cls, _uid):
         while Container.match(CacheCat.uid, _uid):
             _uid = cls.increment_uid(_uid)
-        cls.add(CacheCat.uid, _uid)
+        cls.add_value_to_cache(CacheCat.uid, _uid)
         return _uid
 
     @classmethod

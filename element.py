@@ -39,9 +39,9 @@ class ElementFactory:
     def __init__(self):
         pass
 
-    def build(self, style, values=[], keys=[], generate_uid=True):
+    def build_element(self, style, values=[], keys=[], generate_uid=True):
         pass
 
     @staticmethod
-    def create(style, values=[], keys=[], generate_uid=True):
+    def create_element(style, values=[], keys=[], generate_uid=True):
         pass

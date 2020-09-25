@@ -14,17 +14,17 @@ class QuestionPrompt:
     @staticmethod
     def add_question(_path="/home/czechmate/Documents/python/programs/Quiz_Maker/tests/test_file.txt"):
         _qstyle = Question.prompt_for_style()
-        _question = QuestionFactory.create(_qstyle)  # generate ID
+        _question = QuestionFactory.create_element(_qstyle)  # generate ID
         _qinquiry = _question.prompt_for_inquiry()
         _qchoices = _question.prompt_for_choices()
         _qanswer = _question.prompt_for_answer(_qchoices)
         _question.update((_question.uid, _qstyle, _qinquiry, _qchoices, _qanswer), QuestionKeys.get_keys())
-        QuestionCache.add(CacheCat.question, _question)
+        QuestionCache.add_value_to_cache(CacheCat.question, _question)
         Storage.append_element_to_file(_question.content, _path)
 
     @staticmethod
     def remove_question(_path="/home/czechmate/Documents/python/programs/Quiz_Maker/tests/test_file.txt"):
-        _questions = QuestionCache.get_all(CacheCat.question)
+        _questions = QuestionCache.get_all_values_in_cache(CacheCat.question)
         _uids = [question.get_uid for question in _questions]
         _inquiries = [question.get_inquiry() for question in _questions]
         _options = Option_Factory.generate_linked_options(_inquiries, _uids)
@@ -33,8 +33,8 @@ class QuestionPrompt:
         _selected_option = Menu_Factory.run_option_menu(_options, _selection_message, _header)
         _selected_uid = _selected_option.linked_uid
         _question_to_delete = QuestionPrompt.get_matching_question(_questions, _selected_uid)
-        QuestionCache.remove(CacheCat.question, _question_to_delete)
-        QuestionIO.overwrite_questions_to_file(_path, QuestionCache.get_all(CacheCat.question))
+        QuestionCache.remove_value_from_cache(CacheCat.question, _question_to_delete)
+        QuestionIO.overwrite_questions_to_file(_path, QuestionCache.get_all_values_in_cache(CacheCat.question))
         QuestionCache.print_cache(CacheCat.question)
 
     @classmethod

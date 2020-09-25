@@ -10,6 +10,9 @@ class Storage(FileWriter, FileReader):
 
     @classmethod
     def cache_elements_in_file(cls, keys, file_path, cache_name, element_factory):
+        """Clears a cache and overwrites it with the lines in the file"""
+
+        Cacheable.delete_cache(cache_name)
         _lines = cls.get_lines(file_path)
         if len(_lines) > 0:
             _elements = []
@@ -18,9 +21,9 @@ class Storage(FileWriter, FileReader):
                     continue
                 _elements.append(cls.read_element_from_file(line, keys, element_factory))
             for element in _elements:
-                Cacheable.add(cache_name, element)
+                Cacheable.add_value_to_cache(cache_name, element)
         else:
-            Cacheable.create(cache_name)
+            Cacheable.create_cache(cache_name)
 
     @classmethod
     def is_blank_line(cls, line):
@@ -36,7 +39,7 @@ class Storage(FileWriter, FileReader):
             _raw_content = ast.literal_eval(_line)
             for key in _keys:
                 _values.append(_raw_content[key])
-            return element_factory.create(ElementStyle.generic, _values, _keys, False)
+            return element_factory.create_element(ElementStyle.generic, _values, _keys, False)
         except EOFError:
             #  Prevents an error if there is a blank line in the file
             print("End of File Error")

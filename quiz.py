@@ -53,11 +53,11 @@ class Quiz(Element):
 
 class QuizFactory(ElementFactory):
 
-    def build(self, style, values=[], keys=QuizKeys.get_keys(), generate_id=True):
-        QuizFactory.create(style, values, keys, generate_id)
+    def build_element(self, style, values=[], keys=QuizKeys.get_keys(), generate_id=True):
+        QuizFactory.create_element(style, values, keys, generate_id)
 
     @staticmethod
-    def create(style, values=[], keys=QuizKeys.get_keys(), generate_id=True):
+    def create_element(style, values=[], keys=QuizKeys.get_keys(), generate_id=True):
         if style == QuizStyles.generic:
             return QuizFactory.create_generic_question(values, keys, generate_id)
 

@@ -169,11 +169,11 @@ class MultipleChoice(Question):
 
 class QuestionFactory(ElementFactory):
 
-    def build(self, qstyle, qvalues=[], qkeys=QuestionKeys.get_keys(), generate_id=True):
-        QuestionFactory.create(qstyle, qvalues, qkeys, generate_id)
+    def build_element(self, qstyle, qvalues=[], qkeys=QuestionKeys.get_keys(), generate_id=True):
+        QuestionFactory.create_element(qstyle, qvalues, qkeys, generate_id)
 
     @staticmethod
-    def create(qstyle, qvalues=[], qkeys=QuestionKeys.get_keys(), generate_id=True):
+    def create_element(qstyle, qvalues=[], qkeys=QuestionKeys.get_keys(), generate_id=True):
         if qstyle == QuestionStyles.true_false:
             return QuestionFactory.create_true_false_question(qvalues, qkeys, generate_id)
         elif qstyle == QuestionStyles.multiple_choice:

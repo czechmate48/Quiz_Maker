@@ -5,9 +5,9 @@
 from link_imports import link_parent_directory
 
 link_parent_directory()
-
-from pages.home import PageOptions, HomeFactory
-
+from pages.next_page import NextPage
+from pages.page_factory import PageFactory
+from pages.home import PageOptions
 from storage import Storage
 
 # FIXME -> Need to remove '=' at end of config filepaths. For some reason I keep getting a /n at the
@@ -15,13 +15,16 @@ from storage import Storage
 
 question_file_path = Storage.get_config_value('/home/czechmate/Documents/python/programs/Quiz_Maker/data/file_paths.txt', 'question_file_path')
 
-page = HomeFactory.create_page(PageOptions.home)
+initial_page = NextPage(PageOptions.home)
+page = PageFactory.create_page(initial_page)
+
 while True:
     page.display()
-    next_page = page.get_next_page()
+    next_page = page.get_next_page()  # NextPage Object
+    page = PageFactory.create_page(next_page)  # Create the next page
 
     # Start here
-    # Look how home is structured. Unfortunately you are passing file_paths
-    # and other data when a next_page is obtained. Need to figure out some
-    # way to pass that data. Maybe create an Next_Page class that holds all
-    # of that data. Every page class except home.py needs work.
+    # Created a NextPage class. Every time a page selects a class
+    # it needs to encapsulate it in a NextPage object. I have refactored
+    # the code for page.py and new_quiz.py, so it is time to refactor it for
+    # add_questions_to_quiz.py and then go from there.

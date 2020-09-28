@@ -1,3 +1,0 @@
-{'uid': 140122028968112, 'style': 'TRUE/FALSE', 'inquiry': 'What is this question?', 'choices': ['true', 'false'], 'answer': 'false'}
-{'uid': 140122002610210, 'style': 'TRUE/FALSE', 'inquiry': 'How much is a car?', 'choices': ['true', 'false'], 'answer': 'false'}
-{'uid': 140122002612130, 'style': 'MULTIPLE CHOICE', 'inquiry': 'what is mother?', 'choices': ['father', 'mother'], 'answer': 'mother'}

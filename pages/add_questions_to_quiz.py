@@ -1,6 +1,6 @@
 from menu import Menu_Factory
 from pages.page import Page, PageOptions
-from question import Question, QuestionFactory
+from question import Question, QuestionFactory, QuestionKeys
 from storage import Storage
 
 
@@ -43,7 +43,7 @@ class AddQuestionsToQuiz(Page):
         if _answer == 'n' or _answer == "no":
             self.next_page = PageOptions.home
         elif _answer == 'y' or _answer == "yes":
-            self.next_page = PageOptions.add_questions_to_quiz self._file_path
+            self.next_page = PageOptions.add_questions_to_quiz(self._file_path)
         else:
             self.prompt_for_add_another_question()
 

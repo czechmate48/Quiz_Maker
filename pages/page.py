@@ -1,3 +1,4 @@
+import sys
 from dataclasses import dataclass
 
 
@@ -6,13 +7,13 @@ class PageOptions:
     home: str = "Home"
     new_quiz: str = "Add a Quiz"
     add_questions_to_quiz: str = "Add Questions to Quiz"
-    quit: str = "Quit"
-    back: str = "Back"
-    edit_specific_question: str = "Edit Specific Question"  # Place holder for specific question
-    take_quiz: str = "Take a Quiz"
-    delete_quiz: str = "Delete a Quiz"
     select_quiz_to_edit: str = "Edit a Quiz"
     edit_specific_quiz: str = "Edit Specific Quiz"
+    edit_specific_question: str = "Edit Specific Question"  # Place holder for specific question
+    quit: str = "Quit"
+    back: str = "Back"
+    take_quiz: str = "Take a Quiz"
+    delete_quiz: str = "Delete a Quiz"
 
     @staticmethod
     def get_page_options():
@@ -30,6 +31,3 @@ class Page:
 
     def back(self):
         return Page
-
-    def quit(self):
-        pass

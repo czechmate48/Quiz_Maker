@@ -1,3 +1,5 @@
+import sys
+
 from pages.add_questions_to_quiz import AddQuestionsToQuiz
 from pages.delete_quiz import DeleteQuiz
 from pages.edit_specific_question import EditSpecificQuestion
@@ -16,17 +18,20 @@ class PageFactory:
 
     @staticmethod
     def create_page(next_page):  # requires a NextPage object
-        if next_page.page_name == PageOptions.home:
+        page_name = next_page.next_page_name
+        if page_name == PageOptions.home:
             return Home()
-        elif next_page.page_name == PageOptions.new_quiz:
+        elif page_name == PageOptions.new_quiz:
             return NewQuiz()
-        elif next_page.page_name == PageOptions.delete_quiz:  # REMOVE QUIZ
+        elif page_name == PageOptions.delete_quiz:  # REMOVE QUIZ
             return DeleteQuiz()
-        elif next_page.page_name == PageOptions.add_questions_to_quiz:  # ADD QUESTIONS TO QUIZ
+        elif page_name == PageOptions.add_questions_to_quiz:  # ADD QUESTIONS TO QUIZ
             return AddQuestionsToQuiz(next_page.file_path)
-        elif next_page.page_name == PageOptions.select_quiz_to_edit:
+        elif page_name == PageOptions.select_quiz_to_edit:
             return SelectQuizToEdit()
-        elif next_page.page_name == PageOptions.edit_specific_quiz:
+        elif page_name == PageOptions.edit_specific_quiz:
             return EditSpecificQuiz(next_page.file_path)
-        elif next_page.page_name == PageOptions.edit_specific_question:
+        elif page_name == PageOptions.edit_specific_question:
             return EditSpecificQuestion(next_page.question)
+        elif page_name == PageOptions.quit:
+            return sys.exit()  # EXIT PROGRAM

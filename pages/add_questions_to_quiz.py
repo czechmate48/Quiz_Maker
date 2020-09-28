@@ -1,4 +1,5 @@
 from menu import Menu_Factory
+from pages.next_page import NextPage
 from pages.page import Page, PageOptions
 from question import Question, QuestionFactory, QuestionKeys
 from storage import Storage
@@ -12,14 +13,22 @@ class AddQuestionsToQuiz(Page):
     def __init__(self, _file_path):
         # TODO -> Update way of accessing file path
         self._file_path = _file_path
+        self.add_another_question_answer = "n"
         self.next_page = PageOptions.add_questions_to_quiz
 
     def display(self):
         _question = self.prompt_for_question()
         self.save_question_to_file(_question)
-        _answer = self.prompt_for_add_another_question()
-        _next_page = self.get_next_page(_answer)
-        return _next_page
+        self.add_another_question_answer = self.prompt_for_add_another_question()
+
+    def get_next_page(self):
+        _answer = self.add_another_question_answer.lower()
+        if _answer == 'n' or _answer == "no":
+            return NextPage(PageOptions.home)
+        elif _answer == 'y' or _answer == "yes":
+            return NextPage(PageOptions.add_questions_to_quiz, self._file_path)
+        else:
+            self.prompt_for_add_another_question()
 
     @staticmethod
     def prompt_for_question():
@@ -37,13 +46,3 @@ class AddQuestionsToQuiz(Page):
     def prompt_for_add_another_question(self):
         _add_question_selection = Menu_Factory.run_yes_no_menu("\nAdd another question?")
         return _add_question_selection
-
-    def get_next_page(self, _answer):
-        _answer = _answer.lower()
-        if _answer == 'n' or _answer == "no":
-            self.next_page = PageOptions.home
-        elif _answer == 'y' or _answer == "yes":
-            self.next_page = PageOptions.add_questions_to_quiz(self._file_path)
-        else:
-            self.prompt_for_add_another_question()
-

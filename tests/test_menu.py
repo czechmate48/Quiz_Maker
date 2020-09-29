@@ -23,8 +23,9 @@ while True:
     next_page = page.get_next_page()  # NextPage Object
     page = PageFactory.create_page(next_page)  # Create the next page
 
-    # Start here
-    # Created a NextPage class. Every time a page selects a class
-    # it needs to encapsulate it in a NextPage object. I have refactored
-    # the code for page.py and new_quiz.py, so it is time to refactor it for
-    # add_questions_to_quiz.py and then go from there.
+    # The edit_specific_question page is able to edit a specific question,
+    # but it is not yet able to correctly update the question_file.
+    # It seems to be removing the question from the question cache, but the
+    # question file is not rewritten when the question is selected for being
+    # edited. Need to make the question file update correctly after a question
+    # is edited

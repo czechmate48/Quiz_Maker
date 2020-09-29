@@ -1,7 +1,5 @@
 from cache import CacheCat, QuestionCache
 from menu import Option_Factory, Menu_Factory
-from pages.edit_specific_question import EditSpecificQuestion
-from pages.home import Home
 from pages.next_page import NextPage
 from pages.page import Page, PageOptions
 from question import QuestionFactory, QuestionKeys
@@ -27,7 +25,7 @@ class EditSpecificQuiz(Page):
         elif _answer == PageOptions.quit:
             return NextPage(PageOptions.quit)
         else:
-            return NextPage(PageOptions.edit_specific_question, '', _answer)  #_answer = question
+            return NextPage(PageOptions.edit_specific_question, self._file_path, _answer)  # _answer = question inquiry
 
     def cache_questions(self):
         question_factory = QuestionFactory()

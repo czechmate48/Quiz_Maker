@@ -48,7 +48,7 @@ class Container:
         elif value not in cls.caches[cache_name]:
             print("value not in cache")
         else:
-            cls.caches[cache_name].remove_value_from_cache(value)
+            cls.caches[cache_name].remove(value)
 
     @classmethod
     def delete_cache(cls, cache_name):

@@ -10,10 +10,12 @@ class PageOptions:
     select_quiz_to_edit: str = "Edit a Quiz"
     edit_specific_quiz: str = "Edit Specific Quiz"
     edit_specific_question: str = "Edit Specific Question"  # Place holder for specific question
-    quit: str = "Quit"
-    back: str = "Back"
     take_quiz: str = "Take a Quiz"
     delete_quiz: str = "Delete a Quiz"
+    quit: str = "Quit"
+    back: str = "Back"
+    delete: str = "Delete"
+    edit: str = "Edit"
 
     @staticmethod
     def get_page_options():

@@ -32,6 +32,6 @@ class PageFactory:
         elif page_name == PageOptions.edit_specific_quiz:
             return EditSpecificQuiz(next_page.file_path)
         elif page_name == PageOptions.edit_specific_question:
-            return EditSpecificQuestion(next_page.question)
+            return EditSpecificQuestion(next_page.file_path, next_page.question_inquiry)
         elif page_name == PageOptions.quit:
             return sys.exit()  # EXIT PROGRAM

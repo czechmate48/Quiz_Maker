@@ -1,4 +1,3 @@
-{'uid': 140610797250736, 'style': 'TRUE/FALSE', 'inquiry': 'I am tall', 'choices': ['true', 'false'], 'answer': 'false'}
-{'uid': 140610771334914, 'style': 'TRUE/FALSE', 'inquiry': 'People are fun', 'choices': ['true', 'false'], 'answer': 'true'}
 {'uid': 140610770938275, 'style': 'TRUE/FALSE', 'inquiry': 'The sky is blue', 'choices': ['true', 'false'], 'answer': 'true'}
 {'uid': 140482114664242, 'style': 'TRUE/FALSE', 'inquiry': 'This is working', 'choices': ['true', 'false'], 'answer': 'true'}
+{'uid': 140538526329009, 'style': 'TRUE/FALSE', 'inquiry': 'People make me laugh', 'choices': ['true', 'false'], 'answer': 'true'}

@@ -23,9 +23,4 @@ while True:
     next_page = page.get_next_page()  # NextPage Object
     page = PageFactory.create_page(next_page)  # Create the next page
 
-    # The edit_specific_question page is able to edit a specific question,
-    # but it is not yet able to correctly update the question_file.
-    # It seems to be removing the question from the question cache, but the
-    # question file is not rewritten when the question is selected for being
-    # edited. Need to make the question file update correctly after a question
-    # is edited
+    # Finish adding the 'back' and 'quit' logic to edit_specific_question

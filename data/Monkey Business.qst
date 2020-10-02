@@ -1,3 +1,2 @@
-{'uid': 140610770938275, 'style': 'TRUE/FALSE', 'inquiry': 'The sky is blue', 'choices': ['true', 'false'], 'answer': 'true'}
-{'uid': 140482114664242, 'style': 'TRUE/FALSE', 'inquiry': 'This is working', 'choices': ['true', 'false'], 'answer': 'true'}
-{'uid': 140538526329009, 'style': 'TRUE/FALSE', 'inquiry': 'People make me laugh', 'choices': ['true', 'false'], 'answer': 'true'}
+{'uid': 140375557560112, 'style': 'TRUE/FALSE', 'inquiry': 'Do you like monkey business?', 'choices': ['true', 'false'], 'answer': 'true'}
+{'uid': 140375557559346, 'style': 'MULTIPLE CHOICE', 'inquiry': 'What do monkeys eat?', 'choices': ['bananas', 'apples', 'cherries'], 'answer': 'bananas'}

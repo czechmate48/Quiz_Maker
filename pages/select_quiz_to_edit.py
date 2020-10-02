@@ -2,6 +2,8 @@ from cache import QuizCache, CacheCat
 from menu import Option_Factory, Menu_Factory
 from pages.next_page import NextPage
 from pages.page import Page, PageOptions
+from question import QuestionFactory
+from storage import Storage
 
 
 class SelectQuizToEdit(Page):
@@ -24,7 +26,7 @@ class SelectQuizToEdit(Page):
             return NextPage(PageOptions.quit)
         else:
             self._quiz_question_path = '/home/czechmate/Documents/python/programs/Quiz_Maker/data/' + _answer + '.qst'
-            return NextPage(PageOptions.edit_specific_quiz, self._quiz_question_path)
+            return NextPage(PageOptions.choose_how_to_edit_quiz, self._quiz_question_path)
 
     def prompt_for_quiz(self):
         _choices = Option_Factory.generate_unlinked_options(self.get_options())

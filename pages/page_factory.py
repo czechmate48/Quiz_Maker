@@ -1,9 +1,9 @@
 import sys
 
 from pages.add_questions_to_quiz import AddQuestionsToQuiz
+from pages.choose_how_to_edit_quiz import ChooseHowToEditQuiz
 from pages.delete_quiz import DeleteQuiz
-from pages.edit_specific_question import EditSpecificQuestion
-from pages.edit_specific_quiz import EditSpecificQuiz
+from pages.delete_question import DeleteQuestion
 from pages.home import Home
 from pages.new_quiz import NewQuiz
 from pages.page import PageOptions
@@ -29,9 +29,9 @@ class PageFactory:
             return AddQuestionsToQuiz(next_page.file_path)
         elif page_name == PageOptions.select_quiz_to_edit:
             return SelectQuizToEdit()
-        elif page_name == PageOptions.edit_specific_quiz:
-            return EditSpecificQuiz(next_page.file_path)
-        elif page_name == PageOptions.edit_specific_question:
-            return EditSpecificQuestion(next_page.file_path, next_page.question_inquiry)
+        elif page_name == PageOptions.choose_how_to_edit_quiz:
+            return ChooseHowToEditQuiz(next_page.file_path)
+        elif page_name == PageOptions.delete_question:
+            return DeleteQuestion(next_page.file_path)
         elif page_name == PageOptions.quit:
             return sys.exit()  # EXIT PROGRAM

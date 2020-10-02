@@ -18,8 +18,7 @@ class Home(Page):
         self.prompt_for_next_page()
 
     def get_next_page(self):
-        this_page = NextPage(PageOptions.home)  # Used for Back functionality
-        return NextPage(self.next_page.display_value, this_page)
+        return NextPage(self.next_page.display_value)
 
     def load_quiz_cache(self):
         quiz_file_path = Storage.get_config_value(

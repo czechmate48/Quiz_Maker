@@ -16,6 +16,9 @@ class PageOptions:
     back: str = "Back"
     delete: str = "Delete"
     edit: str = "Edit"
+    add_question: str = "Add Question"
+    delete_question: str = "Delete Question"
+    choose_how_to_edit_quiz: str = "Choose how to edit quiz"  # Don't list in options
 
     @staticmethod
     def get_page_options():

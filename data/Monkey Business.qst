@@ -1,2 +1,0 @@
-{'uid': 140375557560112, 'style': 'TRUE/FALSE', 'inquiry': 'Do you like monkey business?', 'choices': ['true', 'false'], 'answer': 'true'}
-{'uid': 140375557559346, 'style': 'MULTIPLE CHOICE', 'inquiry': 'What do monkeys eat?', 'choices': ['bananas', 'apples', 'cherries'], 'answer': 'bananas'}

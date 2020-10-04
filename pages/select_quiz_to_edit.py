@@ -2,9 +2,6 @@ from cache import QuizCache, CacheCat
 from menu import Option_Factory, Menu_Factory
 from pages.next_page import NextPage
 from pages.page import Page, PageOptions
-from question import QuestionFactory
-from storage import Storage
-
 
 class SelectQuizToEdit(Page):
 

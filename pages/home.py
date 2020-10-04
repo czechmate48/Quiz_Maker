@@ -12,19 +12,24 @@ class Home(Page):
 
     def __init__(self):
         self.next_page = PageOptions.home
+        self.quiz_file_path = ''
 
     def display(self):
         self.load_quiz_cache()
         self.prompt_for_next_page()
 
     def get_next_page(self):
-        return NextPage(self.next_page.display_value)
+        _next_page = self.next_page.display_value
+        if _next_page == PageOptions.delete_quiz:
+            return NextPage(_next_page, self.quiz_file_path)
+        else:
+            return NextPage(_next_page)
 
     def load_quiz_cache(self):
-        quiz_file_path = Storage.get_config_value(
+        self.quiz_file_path = Storage.get_config_value(
             '/home/czechmate/Documents/python/programs/Quiz_Maker/data/file_paths.txt', 'quiz_file_path')
         quiz_factory = QuizFactory()
-        Storage.cache_elements_in_file(QuizKeys.get_keys(), quiz_file_path, CacheCat.quiz, quiz_factory)
+        Storage.cache_elements_in_file(QuizKeys.get_keys(), self.quiz_file_path, CacheCat.quiz, quiz_factory)
 
     def prompt_for_next_page(self):
         _choices = Option_Factory.generate_unlinked_options(self.get_menu_options())

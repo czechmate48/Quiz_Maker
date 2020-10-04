@@ -24,7 +24,7 @@ class PageFactory:
         elif page_name == PageOptions.new_quiz:
             return NewQuiz()
         elif page_name == PageOptions.delete_quiz:  # REMOVE QUIZ
-            return DeleteQuiz()
+            return DeleteQuiz(next_page.file_path)
         elif page_name == PageOptions.add_questions_to_quiz:  # ADD QUESTIONS TO QUIZ
             return AddQuestionsToQuiz(next_page.file_path)
         elif page_name == PageOptions.select_quiz_to_edit:

@@ -7,7 +7,7 @@ from quiz import Quiz, QuizKeys
 from storage import Storage
 
 
-class NewQuiz(Page):
+class AddNewQuiz(Page):
 
     """Creates a new quiz and adds it to the quiz cache"""
 

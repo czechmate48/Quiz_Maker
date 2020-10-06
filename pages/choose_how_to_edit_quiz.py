@@ -41,6 +41,6 @@ class ChooseHowToEditQuiz(Page):
         elif _answer == PageOptions.delete_question:
             return NextPage(PageOptions.delete_question, self._file_path)
         elif _answer == PageOptions.back:
-            return NextPage(PageOptions.select_quiz_to_edit)
+            return NextPage(PageOptions.choose_quiz_to_edit)
         elif _answer == PageOptions.quit:
             return NextPage(PageOptions.quit)

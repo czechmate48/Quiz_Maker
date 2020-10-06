@@ -3,7 +3,8 @@ from menu import Option_Factory, Menu_Factory
 from pages.next_page import NextPage
 from pages.page import Page, PageOptions
 
-class SelectQuizToEdit(Page):
+
+class ChooseQuizToEdit(Page):
 
     """Allows user to select a quiz from the available quizzes;
     Returns an edit page for a quiz's question file"""

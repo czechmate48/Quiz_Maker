@@ -48,6 +48,9 @@ class DeleteQuestion(Page):
 
     def refresh_question_file(self):
         os.remove(self._file_path)
+        _num_questions = len(QuestionCache.get_all_values_in_cache(CacheCat.question))
+        if _num_questions == 0:
+            Storage.create_new_file(self._file_path)
         for _question in QuestionCache.get_all_values_in_cache(CacheCat.question):
             Storage.append_element_to_file(self._file_path, _question.content)
 

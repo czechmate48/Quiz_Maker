@@ -33,15 +33,15 @@ class Home(Page):
 
     def prompt_for_next_page(self):
         _choices = Option_Factory.generate_unlinked_options(self.get_menu_options())
-        self.next_page = Menu_Factory.run_option_menu(_choices, "Please make a selection", "Quiz Maker 1.0")
+        self.next_page = Menu_Factory.run_option_menu_no_sm(_choices, "Quiz Maker 1.0")
 
     @staticmethod
     def get_menu_options():
         _options = [
-            PageOptions.new_quiz,
+            PageOptions.add_new_quiz,
             PageOptions.delete_quiz,
-            PageOptions.select_quiz_to_edit,
-            PageOptions.take_quiz,
+            PageOptions.choose_quiz_to_edit,
+            PageOptions.choose_quiz_to_take,
             PageOptions.quit
         ]
         return _options

@@ -56,8 +56,7 @@ class QuestionIO(Storage):
         _questions = cls.get_values(QuestionKeys.inquiry, _file_path)
         _options = Option.generate_value_options(_questions)
         _header = "\nWhich question would you like to delete?\n"
-        _selection_message = "\nPlease select a question\n"
-        return Menu_Factory.run_option_menu(_options, _selection_message, _header)
+        return Menu_Factory.run_option_menu_no_sm(_options, _header)
 
 
 #####################
@@ -75,9 +74,8 @@ class Question(Element):
     @staticmethod
     def prompt_for_style():
         _options = Option_Factory.generate_unlinked_options(QuestionStyles.get_keys())
-        _selection_message = "\nPlease select a question style\n"
-        _header = "\nwhat is the question style?\n"
-        _selected_option = Menu_Factory.run_option_menu(_options, _selection_message, _header)
+        _selection_message = "Please select a question style"
+        _selected_option = Menu_Factory.run_option_menu_no_sm(_options, _selection_message)
         return _selected_option.display_value
 
     def prompt_for_inquiry(self):
@@ -115,9 +113,8 @@ class True_False(Question):
 
     def prompt_for_answer(self, _choices):
         _options = Option_Factory.generate_unlinked_options(_choices)
-        _selection_message = "\nSelect correct answer\n"
-        _header = "\nWhich choice is the correct answer?\n"
-        _selected_option = Menu_Factory.run_option_menu(_options, _selection_message, _header)
+        _header = "Which choice is the correct answer?"
+        _selected_option = Menu_Factory.run_option_menu_no_sm(_options, _header)
         return _selected_option.display_value
 
 
@@ -140,7 +137,7 @@ class MultipleChoice(Question):
         _num_choices = -1
         while _num_choices == -1:
             try:
-                _header = "Please  input the number of choices"
+                _header = "Please input the number of choices"
                 _num_choices = Menu_Factory.run_no_option_menu(_header)
                 _num_choices = int(_num_choices)
             except ValueError:
@@ -150,16 +147,15 @@ class MultipleChoice(Question):
     def get_choices_from_user(self, _num_choices):
         _choices = []
         while _num_choices > 0:
-            print("please input a choice")
+            print("\nplease input a choice")
             _choices.append(input())
             _num_choices -= 1
         return _choices
 
     def prompt_for_answer(self, _choices):
         _options = Option_Factory.generate_unlinked_options(_choices)
-        _selection_message = "\nSelect correct answer"
-        _header = "\nWhich choice is the correct answer?\n"
-        _selected_option = Menu_Factory.run_option_menu(_options, _selection_message, _header)
+        _header = "Which choice is the correct answer?"
+        _selected_option = Menu_Factory.run_option_menu_no_sm(_options, _header)
         return _selected_option.display_value
 
 

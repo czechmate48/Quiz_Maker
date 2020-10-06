@@ -23,4 +23,7 @@ while True:
     next_page = page.get_next_page()  # NextPage Object
     page = PageFactory.create_page(next_page)  # Create the next page
 
-    # Finish adding the 'back' and 'quit' logic to edit_specific_question
+    #  10/5 Start with 'choose_quiz_to_take'. The logic for the page is done except for
+    #  where the program should go after selecting a quiz. You need to creating a
+    #  'TakeQuiz' component of the program that asks questions, stores the score,
+    #  and provides a final result

@@ -7,20 +7,16 @@ class PageOptions:
     home: str = "Home"
     add_new_quiz: str = "Add a Quiz"
     add_questions_to_quiz: str = "Add Questions to Quiz"
+    add_question: str = "Add Question"
     choose_quiz_to_edit: str = "Edit a Quiz"
     choose_how_to_edit_quiz: str = "Choose how to edit quiz"  # Don't list in options
     choose_quiz_to_take: str = "Take a Quiz"
     edit_specific_quiz: str = "Edit Specific Quiz"
     edit_specific_question: str = "Edit Specific Question"  # Place holder for specific question
-
+    delete_question: str = "Delete Question"
     delete_quiz: str = "Delete a Quiz"
     quit: str = "Quit"
     back: str = "Back"
-    delete: str = "Delete"
-    edit: str = "Edit"
-    add_question: str = "Add Question"
-    delete_question: str = "Delete Question"
-
 
     @staticmethod
     def get_page_options():
@@ -37,4 +33,4 @@ class Page:
         pass
 
     def back(self):
-        return Page
+        pass

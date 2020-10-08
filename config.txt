@@ -1,4 +1,0 @@
-#Configuration file
-
-quiz_location="/home/czechmate/Documents/python/programs/Quiz_Maker/data"
-question_location="/home/czechmate/Documents/python/programs/Quiz_Maker/data"

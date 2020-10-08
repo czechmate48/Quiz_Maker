@@ -6,7 +6,6 @@ when the program is closed"""
 from dataclasses import dataclass
 from keys import Keys
 
-path = "/home/czechmate/Documents/python/programs/Quiz_Maker"
 
 @dataclass
 class CacheCat(Keys):

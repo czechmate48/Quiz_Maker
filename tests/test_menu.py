@@ -27,3 +27,6 @@ while True:
     #  where the program should go after selecting a quiz. You need to creating a
     #  'TakeQuiz' component of the program that asks questions, stores the score,
     #  and provides a final result
+    #
+    #  10/7 - Started code refactoring & optimizations
+    #  Completed: add_new_quiz.py

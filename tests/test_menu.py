@@ -28,5 +28,7 @@ while True:
     #  'TakeQuiz' component of the program that asks questions, stores the score,
     #  and provides a final result
     #
-    #  10/7 - Started code refactoring & optimizations
-    #  Completed: add_new_quiz.py
+    #  10/8 - Started code refactoring & optimizations
+    #  Completed: add_new_quiz.py, add_questions_to_quiz.py, choose_how_to_edit_quiz.py
+    #             choose_quiz_to_edit.py,
+    #  started working on delete_question.py

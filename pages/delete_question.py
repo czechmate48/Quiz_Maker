@@ -10,28 +10,42 @@ from storage import Storage
 
 class DeleteQuestion(Page):
 
-    """Lists all the questions in a specific quiz"""
+    """Caches questions, Lists all the questions in a specific quiz"""
 
-    def __init__(self, file_path):
-        self._file_path = file_path
+    def __init__(self, _qst_file_path):
+        self._qst_file_path = _qst_file_path
+        self._which_question_to_delete_question = "Which question would you like to delete?"
         self._question_inquiry = ''  # Will be equal to the answer
         self._answer = ''  # Can be a specific question or back/quit
 
+    #  CALLED EXTERNALLY
     def display(self):
-        self.cache_questions()
-        self.prompt_for_question()
+        self.cache_questions_in_qst_file()
+        self.prompt_for_question_to_delete()
 
+    def cache_questions_in_qst_file(self):
+        question_factory = QuestionFactory()
+        Storage.cache_elements_in_file(QuestionKeys.get_keys(), self._qst_file_path,
+                                       CacheCat.question, question_factory)
+
+    def prompt_for_question_to_delete(self):
+        _choices = Option_Factory.generate_unlinked_options(self.get_options())
+        self._answer = Menu_Factory.run_option_menu_no_sm(_choices, self._which_question_to_delete_question)
+
+    ##################
+
+    #  CALLED EXTERNALLY
     def get_next_page(self):
         _answer = self._answer.display_value
         if _answer == PageOptions.back:
-            return NextPage(PageOptions.choose_how_to_edit_quiz, self._file_path)
+            return NextPage(PageOptions.choose_how_to_edit_quiz, self._qst_file_path)
         elif _answer == PageOptions.quit:
             return NextPage(PageOptions.quit)
         else:
             self._question_inquiry = _answer
             self.remove_question()
             print("\n" + self._question_inquiry + " removed")
-            return NextPage(PageOptions.delete_question, self._file_path)
+            return NextPage(PageOptions.delete_question, self._qst_file_path)
 
     def remove_question(self):
         _all_questions = QuestionCache.get_all_values_in_cache(CacheCat.question)
@@ -47,21 +61,12 @@ class DeleteQuestion(Page):
         QuestionCache.remove_value_from_cache(CacheCat.question, _question)
 
     def refresh_question_file(self):
-        os.remove(self._file_path)
+        os.remove(self._qst_file_path)
         _num_questions = len(QuestionCache.get_all_values_in_cache(CacheCat.question))
         if _num_questions == 0:
-            Storage.create_new_file(self._file_path)
+            Storage.create_new_file(self._qst_file_path)
         for _question in QuestionCache.get_all_values_in_cache(CacheCat.question):
-            Storage.append_element_to_file(self._file_path, _question.content)
-
-    def cache_questions(self):
-        question_factory = QuestionFactory()
-        Storage.cache_elements_in_file(QuestionKeys.get_keys(), self._file_path,
-                                       CacheCat.question, question_factory)
-
-    def prompt_for_question(self):
-        _choices = Option_Factory.generate_unlinked_options(self.get_options())
-        self._answer = Menu_Factory.run_option_menu_no_sm(_choices, "Which question would you like to delete?")
+            Storage.append_element_to_file(self._qst_file_path, _question.content)
 
     def get_options(self):
         _options = []

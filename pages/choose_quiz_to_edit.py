@@ -9,6 +9,7 @@ class ChooseQuizToEdit(Page):
     Returns an edit page for a quiz's .qst file"""
 
     def __init__(self):
+        super().__init__()
         self._quiz_question_path = '/home/czechmate/Documents/python/programs/Quiz_Maker/data/'
         self._quiz_question_extension = ".qst"
         self._choose_quiz_question = "Which quiz would you like to edit?"

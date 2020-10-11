@@ -10,6 +10,7 @@ class ChooseHowToEditQuiz(Page):
     """Cache .qst questions, allows user to select how to edit a specific quiz"""
 
     def __init__(self, qst_file_path):
+        super().__init__()
         self._qst_file_path = qst_file_path
         self._how_to_edit_quiz_question = "How would you like to edit this quiz?"
         self._how_to_edit_quiz_answer = ""

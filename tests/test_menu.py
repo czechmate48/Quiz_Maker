@@ -30,5 +30,4 @@ while True:
     #
     #  10/8 - Started code refactoring & optimizations
     #  Completed: add_new_quiz.py, add_questions_to_quiz.py, choose_how_to_edit_quiz.py
-    #             choose_quiz_to_edit.py,
-    #  started working on delete_question.py
+    #             choose_quiz_to_edit.py, delete_question.py, delete_quiz.py

@@ -11,23 +11,19 @@ class Home(Page):
     """Loads the home menu. Instantiates the QuizCache"""
 
     def __init__(self):
+        super.__init__()
         self.next_page = PageOptions.home
+        self._config_file_path = '/home/czechmate/Documents/python/programs/Quiz_Maker/data/file_paths.txt'
+        self._config_file_name = 'quiz_file_path'
         self.quiz_file_path = ''
 
+    #  CALLED EXTERNALLY
     def display(self):
         self.load_quiz_cache()
         self.prompt_for_next_page()
 
-    def get_next_page(self):
-        _next_page = self.next_page.display_value
-        if _next_page == PageOptions.delete_quiz:
-            return NextPage(_next_page, self.quiz_file_path)
-        else:
-            return NextPage(_next_page)
-
     def load_quiz_cache(self):
-        self.quiz_file_path = Storage.get_config_value(
-            '/home/czechmate/Documents/python/programs/Quiz_Maker/data/file_paths.txt', 'quiz_file_path')
+        self.quiz_file_path = Storage.get_config_value(self._config_file_path, self._config_file_name)
         quiz_factory = QuizFactory()
         Storage.cache_elements_in_file(QuizKeys.get_keys(), self.quiz_file_path, CacheCat.quiz, quiz_factory)
 
@@ -46,3 +42,12 @@ class Home(Page):
         ]
         return _options
 
+    ##################
+
+    #  CALLED EXTERNALLY
+    def get_next_page(self):
+        _next_page = self.next_page.display_value
+        if _next_page == PageOptions.delete_quiz:
+            return NextPage(_next_page, self.quiz_file_path)
+        else:
+            return NextPage(_next_page)

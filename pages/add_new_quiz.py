@@ -12,6 +12,7 @@ class AddNewQuiz(Page):
     asks if user would like to add questions to the quiz """
 
     def __init__(self):
+        super().__init__()
         self._all_quiz_question_file_path = '/home/czechmate/Documents/python/programs/Quiz_Maker/data/'
         self._new_quiz_question_file_path = ''
         self._add_questions_question = "\nWould you like to add questions?"

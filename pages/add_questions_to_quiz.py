@@ -9,6 +9,7 @@ class AddQuestionsToQuiz(Page):
     """Adds one or more questions to a .qst file"""
 
     def __init__(self, qst_file_path):
+        super().__init__()
         self.qst_file_path = qst_file_path
         self.add_another_question_answer = "n"
         self.add_another_question_question = "\nAdd another question?"

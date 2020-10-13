@@ -1,8 +1,8 @@
 # storage.py
 
-from element import ElementStyle
-from file_manager import FileWriter, FileReader
-from cache import Cacheable
+from elements.element import ElementStyle
+from memory.file_manager import FileWriter, FileReader
+from memory.cache import Cacheable
 import ast
 
 

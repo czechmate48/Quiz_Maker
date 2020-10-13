@@ -1,11 +1,11 @@
 import os
 
-from cache import CacheCat, QuestionCache
-from menu import Option_Factory, Menu_Factory
+from memory.cache import CacheCat, QuestionCache
+from format.menu import OptionFactory, MenuFactory
 from pages.next_page import NextPage
 from pages.page import Page, PageOptions
-from question import QuestionFactory, QuestionKeys
-from storage import Storage
+from elements.question import QuestionFactory, QuestionKeys
+from memory.storage import Storage
 
 
 class DeleteQuestion(Page):
@@ -29,9 +29,9 @@ class DeleteQuestion(Page):
                                        CacheCat.question, question_factory)
 
     def prompt_for_question_to_delete(self):
-        _choices = Option_Factory.generate_unlinked_options(self.get_options())
+        _choices = OptionFactory.generate_unlinked_options(self.get_options())
         self._question_to_delete_answer = \
-            Menu_Factory.run_option_menu_no_sm(_choices, self._which_question_to_delete_question)
+            MenuFactory.run_option_menu_no_sm(_choices, self._which_question_to_delete_question)
 
     @staticmethod
     def get_options():

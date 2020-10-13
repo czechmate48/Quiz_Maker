@@ -1,5 +1,5 @@
-from cache import QuizCache, CacheCat
-from menu import Option_Factory, Menu_Factory
+from memory.cache import QuizCache, CacheCat
+from format.menu import OptionFactory, MenuFactory
 from pages.next_page import NextPage
 from pages.page import Page, PageOptions
 
@@ -20,8 +20,8 @@ class ChooseQuizToEdit(Page):
         self.prompt_for_answer()  # May also return quit or back
 
     def prompt_for_answer(self):
-        _choices = Option_Factory.generate_unlinked_options(self.get_options())
-        self._choose_quiz_answer = Menu_Factory.run_option_menu_no_sm(_choices, self._choose_quiz_question)
+        _choices = OptionFactory.generate_unlinked_options(self.get_options())
+        self._choose_quiz_answer = MenuFactory.run_option_menu_no_sm(_choices, self._choose_quiz_question)
 
     @staticmethod
     def get_options():

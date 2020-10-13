@@ -4,7 +4,7 @@ execution. It is instantiated when the program starts, and is deleted
 when the program is closed"""
 
 from dataclasses import dataclass
-from keys import Keys
+from elements.keys import Keys
 
 
 @dataclass
@@ -12,6 +12,7 @@ class CacheCat(Keys):
     uid: str = "uid"
     question: str = "question"
     quiz: str = "quiz"
+    answer_sheet: str = "answer sheet"
 
     @staticmethod
     def get_keys():
@@ -53,7 +54,7 @@ class Container:
     def delete_cache(cls, cache_name):
         if cls.cache_exists(cache_name):
             cls.caches.pop(cache_name)
-   
+
     @classmethod
     def cache_exists(cls, cache_name):
         if cache_name in cls.caches:
@@ -70,7 +71,7 @@ class Container:
 
 
 class Cacheable:
-  
+
     @classmethod
     def create_cache(cls, cache_name):
         Container.create_cache(cache_name)
@@ -99,7 +100,6 @@ class Cacheable:
 
 
 class UniqueId(Cacheable):
-
     """Unique_Id is a special cache that does not need to be
     instantiated at program execution"""
 
@@ -112,7 +112,7 @@ class UniqueId(Cacheable):
 
     @classmethod
     def increment_uid(cls, _uid):
-        _uid = _uid+1
+        _uid = _uid + 1
         return _uid
 
 
@@ -120,7 +120,7 @@ class QuestionCache(Cacheable):
 
     @classmethod
     def print_cache(cls, category=CacheCat.question):
-        cache=Container.get_cache(category)
+        cache = Container.get_cache(category)
         for item in cache:
             print(item.content)
 
@@ -129,6 +129,10 @@ class QuizCache(Cacheable):
 
     @classmethod
     def print_cache(cls, category=CacheCat.quiz):
-        cache=Container.get_cache(category)
+        cache = Container.get_cache(category)
         for item in cache:
             print(item.content)
+
+
+class AnswerSheetCache(Cacheable):
+    pass

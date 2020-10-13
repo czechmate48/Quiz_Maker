@@ -1,9 +1,9 @@
-from cache import CacheCat
-from menu import Option_Factory, Menu_Factory
+from memory.cache import CacheCat
+from format.menu import OptionFactory, MenuFactory
 from pages.next_page import NextPage
 from pages.page import Page, PageOptions
-from quiz import QuizFactory, QuizKeys
-from storage import Storage
+from elements.quiz import QuizFactory, QuizKeys
+from memory.storage import Storage
 
 
 class Home(Page):
@@ -11,7 +11,6 @@ class Home(Page):
     """Loads the home menu. Instantiates the QuizCache"""
 
     def __init__(self):
-        super.__init__()
         self.next_page = PageOptions.home
         self._config_file_path = '/home/czechmate/Documents/python/programs/Quiz_Maker/data/file_paths.txt'
         self._config_file_name = 'quiz_file_path'
@@ -28,8 +27,8 @@ class Home(Page):
         Storage.cache_elements_in_file(QuizKeys.get_keys(), self.quiz_file_path, CacheCat.quiz, quiz_factory)
 
     def prompt_for_next_page(self):
-        _choices = Option_Factory.generate_unlinked_options(self.get_menu_options())
-        self.next_page = Menu_Factory.run_option_menu_no_sm(_choices, "Quiz Maker 1.0")
+        _choices = OptionFactory.generate_unlinked_options(self.get_menu_options())
+        self.next_page = MenuFactory.run_option_menu_no_sm(_choices, "Quiz Maker 1.0")
 
     @staticmethod
     def get_menu_options():

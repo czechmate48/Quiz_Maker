@@ -1,10 +1,10 @@
-from cache import QuizCache, CacheCat
-from menu import Menu_Factory
+from memory.cache import QuizCache, CacheCat
+from format.menu import MenuFactory
 from pages.next_page import NextPage
 from pages.page import Page, PageOptions
-from question import Question
-from quiz import Quiz, QuizKeys
-from storage import Storage
+from elements.question import Question
+from elements.quiz import Quiz, QuizKeys
+from memory.storage import Storage
 
 
 class AddNewQuiz(Page):
@@ -54,7 +54,7 @@ class AddNewQuiz(Page):
         return _next_page
 
     def prompt_to_add_questions(self, _quiz):
-        _answer = Menu_Factory.run_yes_no_menu(self._add_questions_question)
+        _answer = MenuFactory.run_yes_no_menu(self._add_questions_question)
         return _answer
 
     def select_page_based_on_answer(self, _answer):

@@ -1,10 +1,10 @@
-# element.py
+# elements.element.py
 
 """Elements are components of the program that are essentially generated
 as a dictionary. They can be prompted for after the class is inherited"""
 
-from cache import UniqueId
-from keys import Keys
+from memory.cache import UniqueId
+from elements.keys import Keys
 from dataclasses import dataclass
 
 @dataclass

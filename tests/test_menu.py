@@ -8,7 +8,7 @@ link_parent_directory()
 from pages.next_page import NextPage
 from pages.page_factory import PageFactory
 from pages.home import PageOptions
-from storage import Storage
+from memory.storage import Storage
 
 # FIXME -> Need to remove '=' at end of config filepaths. For some reason I keep getting a /n at the
 # FIXME -> end of the filepath even though tried trimming it with rstrip()
@@ -28,6 +28,5 @@ while True:
     #  'TakeQuiz' component of the program that asks questions, stores the score,
     #  and provides a final result
     #
-    #  10/8 - Started code refactoring & optimizations
-    #  Completed: add_new_quiz.py, add_questions_to_quiz.py, choose_how_to_edit_quiz.py
-    #             choose_quiz_to_edit.py, delete_question.py, delete_quiz.py
+    #  10/12 Started working on the test_answer. Need to cache each test_answer after it
+    #  is created

@@ -1,12 +1,9 @@
 # quiz.py
 
-from file_manager import FileWriter, FileReader
 from dataclasses import dataclass
-from cache import UniqueId, CacheCat
-from keys import Keys
-from element import Element, ElementFactory
-from menu import Menu, Menu_Factory, Option, Option_Factory
-import ast
+from elements.keys import Keys
+from elements.element import Element, ElementFactory
+from format.menu import MenuFactory, OptionFactory
 
 
 @dataclass
@@ -36,15 +33,15 @@ class Quiz(Element):
 
     @staticmethod
     def prompt_for_style():
-        _options = Option_Factory.generate_unlinked_options(QuizStyles.get_styles())
+        _options = OptionFactory.generate_unlinked_options(QuizStyles.get_styles())
         _header = "Please select a quiz style"
-        _selected_option = Menu_Factory.run_option_menu_no_sm(_options, _header)
+        _selected_option = MenuFactory.run_option_menu_no_sm(_options, _header)
         return _selected_option.display_value
 
     @staticmethod
     def prompt_for_name():
         _header = "\nWhat is the name of this quiz?"
-        _selected_option = Menu_Factory.run_no_option_menu(_header)
+        _selected_option = MenuFactory.run_no_option_menu(_header)
         return _selected_option
 
     def get_name(self):

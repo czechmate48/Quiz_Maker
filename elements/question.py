@@ -1,17 +1,14 @@
 # question.py
-'''Creates a question object that contains a variable for
+"""Creates a question object that contains a variable for
 each component of a question. Note that the question object
-does NOT produce a dictionary by default, and will need to 
-be converted to  a dictionary using the built in method'''
+does NOT produce a dictionary by default, and will need to
+be converted to  a dictionary using the built in method"""
 
-from menu import Menu_Factory, Option_Factory, Option
+from format.menu import MenuFactory, OptionFactory, Option
 from dataclasses import dataclass
-from file_manager import FileWriter, FileReader
-from storage import Storage
-from cache import UniqueId, CacheCat, QuestionCache
-from keys import Keys
-from element import Element, ElementFactory
-import ast
+from memory.storage import Storage
+from elements.keys import Keys
+from elements.element import Element, ElementFactory
 
 
 #######################
@@ -56,7 +53,7 @@ class QuestionIO(Storage):
         _questions = cls.get_values(QuestionKeys.inquiry, _file_path)
         _options = Option.generate_value_options(_questions)
         _header = "\nWhich question would you like to delete?\n"
-        return Menu_Factory.run_option_menu_no_sm(_options, _header)
+        return MenuFactory.run_option_menu_no_sm(_options, _header)
 
 
 #####################
@@ -73,21 +70,21 @@ class Question(Element):
 
     @staticmethod
     def prompt_for_style():
-        _options = Option_Factory.generate_unlinked_options(QuestionStyles.get_keys())
+        _options = OptionFactory.generate_unlinked_options(QuestionStyles.get_keys())
         _selection_message = "Please select a question style"
-        _selected_option = Menu_Factory.run_option_menu_no_sm(_options, _selection_message)
+        _selected_option = MenuFactory.run_option_menu_no_sm(_options, _selection_message)
         return _selected_option.display_value
 
     def prompt_for_inquiry(self):
         _header = "Please input a question"
-        return Menu_Factory.run_no_option_menu(_header)
+        return MenuFactory.run_no_option_menu(_header)
 
     def prompt_for_choices(self):
         return []
 
     def prompt_for_answer(self, _choices):
         _header = "Please input the answer"
-        return Menu_Factory.run_no_option_menu(_header)
+        return MenuFactory.run_no_option_menu(_header)
 
     def get_inquiry(self):
         return self.content[QuestionKeys.inquiry]
@@ -95,26 +92,37 @@ class Question(Element):
     def get_uid(self):
         return self.content[QuestionKeys.uid]
 
+    def get_answer(self):
+        return self.content[QuestionKeys.answer]
+
+    def get_choices(self):
+        return self.content[QuestionKeys.choices]
+
     def update(self, values, keys):
         self.content = self.merge_input(values, keys)
 
+    def ask_inquiry(self):
+        _inquiry = self.content[QuestionKeys.inquiry]
+        _options = self.content[QuestionKeys.choices]
+        return MenuFactory.run_option_menu()
 
-###################
-# QUESTION CHILDREN#
-###################
 
-class True_False(Question):
+#####################
+# QUESTION CHILDREN #
+#####################
+
+class TrueFalse(Question):
 
     def __init__(self, values, keys, generate_id):  # generate_id auto assigned in parent
-        super(True_False, self).__init__(values, keys, generate_id)
+        super(TrueFalse, self).__init__(values, keys, generate_id)
 
     def prompt_for_choices(self):
         return ["true", "false"]
 
     def prompt_for_answer(self, _choices):
-        _options = Option_Factory.generate_unlinked_options(_choices)
+        _options = OptionFactory.generate_unlinked_options(_choices)
         _header = "Which choice is the correct answer?"
-        _selected_option = Menu_Factory.run_option_menu_no_sm(_options, _header)
+        _selected_option = MenuFactory.run_option_menu_no_sm(_options, _header)
         return _selected_option.display_value
 
 
@@ -138,7 +146,7 @@ class MultipleChoice(Question):
         while _num_choices == -1:
             try:
                 _header = "Please input the number of choices"
-                _num_choices = Menu_Factory.run_no_option_menu(_header)
+                _num_choices = MenuFactory.run_no_option_menu(_header)
                 _num_choices = int(_num_choices)
             except ValueError:
                 _num_choices = -1
@@ -153,9 +161,9 @@ class MultipleChoice(Question):
         return _choices
 
     def prompt_for_answer(self, _choices):
-        _options = Option_Factory.generate_unlinked_options(_choices)
+        _options = OptionFactory.generate_unlinked_options(_choices)
         _header = "Which choice is the correct answer?"
-        _selected_option = Menu_Factory.run_option_menu_no_sm(_options, _header)
+        _selected_option = MenuFactory.run_option_menu_no_sm(_options, _header)
         return _selected_option.display_value
 
 
@@ -181,7 +189,7 @@ class QuestionFactory(ElementFactory):
 
     @staticmethod
     def create_true_false_question(qvalues=[], qkeys=QuestionKeys.get_keys(), generate_id=True):
-        return True_False(qvalues, qkeys, generate_id)
+        return TrueFalse(qvalues, qkeys, generate_id)
 
     @staticmethod
     def create_multiple_choice_question(qvalues=[], qkeys=QuestionKeys.get_keys(), generate_id=True):

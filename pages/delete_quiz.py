@@ -1,10 +1,10 @@
 import os
 
-from cache import QuizCache, CacheCat
-from menu import Option_Factory, Menu_Factory
+from memory.cache import QuizCache, CacheCat
+from format.menu import OptionFactory, MenuFactory
 from pages.next_page import NextPage
 from pages.page import Page, PageOptions
-from storage import Storage
+from memory.storage import Storage
 
 
 class DeleteQuiz(Page):
@@ -20,9 +20,9 @@ class DeleteQuiz(Page):
 
     #  CALLED EXTERNALLY
     def display(self):
-        _choices = Option_Factory.generate_unlinked_options(self.get_options())
+        _choices = OptionFactory.generate_unlinked_options(self.get_options())
         self._select_quiz_to_delete_answer = \
-            Menu_Factory.run_option_menu_no_sm(_choices, self._select_quiz_to_delete_question)
+            MenuFactory.run_option_menu_no_sm(_choices, self._select_quiz_to_delete_question)
 
     @staticmethod
     def get_options():

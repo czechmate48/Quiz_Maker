@@ -1,5 +1,5 @@
-from cache import QuizCache, CacheCat
-from menu import Option_Factory, Menu_Factory
+from memory.cache import QuizCache, CacheCat
+from format.menu import OptionFactory, MenuFactory
 from pages.next_page import NextPage
 from pages.page import Page, PageOptions
 
@@ -18,8 +18,8 @@ class ChooseQuizToTake(Page):
         self.prompt_for_quiz()  # May also return quit or back
 
     def prompt_for_quiz(self):
-        _choices = Option_Factory.generate_unlinked_options(self.get_options())
-        self._answer = Menu_Factory.run_option_menu_no_sm(_choices, "Which quiz would you like to take?")
+        _choices = OptionFactory.generate_unlinked_options(self.get_options())
+        self._answer = MenuFactory.run_option_menu_no_sm(_choices, "Which quiz would you like to take?")
 
     def get_next_page(self):
         _answer = self._answer.display_value

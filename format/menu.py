@@ -6,21 +6,19 @@ file that contains the next set of code."""
 
 ###########################
 from typing import Final
-from cache import UniqueId
+from memory.cache import UniqueId
+
 
 class Menu:
-
     """Menu brings in a set of options and converts them
     into a dictionary - [selection variable,option]"""
-
-    from typing import Final
 
     def __init__(self, options):
 
         """requires an option object from Option class"""
 
         self.first_option: Final = 65  # Used as a constant, starting ascii 65 (A)
-        self._last_option = self.first_option 
+        self._last_option = self.first_option
         self._option_lim: Final = 90  # Limited to 25 menu options
         self.assigned_options = {}  # options assigned a corresponding letter
         for option in options:
@@ -31,7 +29,7 @@ class Menu:
             else:
                 # throw out of bounds error
                 break
-        self.initial_selection = chr(self._option_lim+1)  # initial user selection used to launch loop
+        self.initial_selection = chr(self._option_lim + 1)  # initial user selection used to launch loop
         self.selection_message = "\nPlease make a selection"  # Can be overriden for customization
 
     ###############
@@ -39,7 +37,7 @@ class Menu:
     def display_options(self):
         for option in self.assigned_options:
             print(option, ')', self.assigned_options[option].display_value)
-    
+
     def display_selection_message(self):
         print(self.selection_message)
 
@@ -67,7 +65,7 @@ class Menu:
         """returns the option object selected by the user"""
         self._selection = self.initial_selection
         while not self.check_valid_mc_selection(self._selection):
-            self._selection=input().upper()
+            self._selection = input().upper()
         return self.assigned_options[self._selection]
 
     def check_valid_mc_selection(self, selection):
@@ -83,14 +81,15 @@ class Menu:
             return True
 
     def get_yes_no_selection(self):
-        self._selection=input()
+        self._selection = input()
         while not Selection.is_yesno(self._selection):
-            self._selection=input()
+            self._selection = input()
         return self._selection
+
 
 #############################
 
-class Menu_Factory:
+class MenuFactory:
 
     @staticmethod
     def run_option_menu(options, selection_message, header):
@@ -124,6 +123,7 @@ class Menu_Factory:
         menu.display_header(header)
         return menu.get_yes_no_selection()
 
+
 ##############################
 
 class Option:
@@ -138,7 +138,7 @@ class Option:
         self.letter = letter
 
 
-class Option_Factory:
+class OptionFactory:
     """linked options connect the option UID with another UID, unlinked options
     simply display a display_value"""
 
@@ -150,6 +150,7 @@ class Option_Factory:
     @staticmethod
     def generate_unlinked_options(display_values):
         return [Option(value) for value in display_values]
+
 
 ##############################
 

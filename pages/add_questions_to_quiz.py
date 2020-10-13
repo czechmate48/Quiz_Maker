@@ -1,8 +1,8 @@
-from menu import Menu_Factory
+from format.menu import MenuFactory
 from pages.next_page import NextPage
 from pages.page import Page, PageOptions
-from question import Question, QuestionFactory, QuestionKeys
-from storage import Storage
+from elements.question import Question, QuestionFactory, QuestionKeys
+from memory.storage import Storage
 
 
 class AddQuestionsToQuiz(Page):
@@ -34,7 +34,7 @@ class AddQuestionsToQuiz(Page):
         Storage.append_element_to_file(self.qst_file_path, _question.content)
 
     def prompt_for_add_another_question(self):
-        _add_question_selection = Menu_Factory.run_yes_no_menu(self.add_another_question_question)
+        _add_question_selection = MenuFactory.run_yes_no_menu(self.add_another_question_question)
         return _add_question_selection
 
     ##################

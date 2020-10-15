@@ -28,5 +28,5 @@ while True:
     #  'TakeQuiz' component of the program that asks questions, stores the score,
     #  and provides a final result
     #
-    #  10/12 Started working on the test_answer. Need to cache each test_answer after it
-    #  is created
+    #  10/13 Started creating the "take_quiz.py" page. Need to create a test_answer.py object
+    #  when an answer is inputted by the user. Then save the test_answer.py to a cache.

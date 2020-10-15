@@ -1,0 +1,3 @@
+{'uid': 140513587441329, 'style': 'MULTIPLE CHOICE', 'inquiry': 'What are Donkey Kongs Initials?', 'choices': ['LK', 'GK', 'DK'], 'answer': 'DK'}
+{'uid': 140513588715474, 'style': 'TRUE/FALSE', 'inquiry': 'Is Donkey Kong a big ape?', 'choices': ['true', 'false'], 'answer': 'true'}
+{'uid': 140513587440273, 'style': 'FILL IN THE BLANK', 'inquiry': 'Donkey Kong is _ _ _', 'choices': [], 'answer': 'big'}

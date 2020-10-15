@@ -2,8 +2,9 @@
 """This file holds temporary information needed by the program during
 execution. It is instantiated when the program starts, and is deleted
 when the program is closed"""
-
+import random
 from dataclasses import dataclass
+
 from elements.keys import Keys
 
 
@@ -123,6 +124,11 @@ class QuestionCache(Cacheable):
         cache = Container.get_cache(category)
         for item in cache:
             print(item.content)
+
+    @classmethod
+    def randomize(cls, category=CacheCat.question):
+        cache = Container.get_cache(category)
+        random.shuffle(cache)
 
 
 class QuizCache(Cacheable):

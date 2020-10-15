@@ -15,6 +15,7 @@ class PageOptions:
     edit_specific_question: str = "Edit Specific Question"  # Place holder for specific question
     delete_question: str = "Delete Question"
     delete_quiz: str = "Delete a Quiz"
+    take_quiz: str = "Start Quiz"
     quit: str = "Quit"
     back: str = "Back"
 

@@ -11,7 +11,9 @@ class ChooseQuizToTake(Page):
 
     def __init__(self):
         super().__init__()
-        self._quiz_question_path = ""
+        self._quiz_question_path = '/home/czechmate/Documents/python/programs/Quiz_Maker/data/'
+        self._quiz_question_question = "Which quiz would you like to take"
+        self._quiz_question_extension = ".qst"
         self._answer = ""
 
     def display(self):
@@ -19,7 +21,7 @@ class ChooseQuizToTake(Page):
 
     def prompt_for_quiz(self):
         _choices = OptionFactory.generate_unlinked_options(self.get_options())
-        self._answer = MenuFactory.run_option_menu_no_sm(_choices, "Which quiz would you like to take?")
+        self._answer = MenuFactory.run_option_menu_no_sm(_choices, self._quiz_question_question)
 
     def get_next_page(self):
         _answer = self._answer.display_value
@@ -28,10 +30,8 @@ class ChooseQuizToTake(Page):
         elif _answer == PageOptions.quit:
             return NextPage(PageOptions.quit)
         else:
-            return NextPage(PageOptions.home)
-            # self._quiz_question_path = '/home/czechmate/Documents/python/programs/Quiz_Maker/data/' + _answer + '.qst'
-            # return NextPage(PageOptions.choose_how_to_edit_quiz, self._quiz_question_path)
-
+            _quiz_question_path = self._quiz_question_path + _answer + self._quiz_question_extension
+            return NextPage(PageOptions.take_quiz, _quiz_question_path)
 
     def get_options(self):
         _options = []

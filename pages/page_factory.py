@@ -9,6 +9,7 @@ from pages.home import Home
 from pages.add_new_quiz import AddNewQuiz
 from pages.page import PageOptions
 from pages.choose_quiz_to_edit import ChooseQuizToEdit
+from pages.take_quiz import TakeQuiz
 
 
 class PageFactory:
@@ -36,5 +37,7 @@ class PageFactory:
             return DeleteQuestion(next_page.file_path)
         elif page_name == PageOptions.choose_quiz_to_take:
             return ChooseQuizToTake()
+        elif page_name == PageOptions.take_quiz:
+            return TakeQuiz(next_page.file_path)
         elif page_name == PageOptions.quit:
             return sys.exit()  # EXIT PROGRAM

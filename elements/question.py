@@ -98,6 +98,9 @@ class Question(Element):
     def get_choices(self):
         return self.content[QuestionKeys.choices]
 
+    def get_style(self):
+        return self.content[QuestionKeys.style]
+
     def update(self, values, keys):
         self.content = self.merge_input(values, keys)
 

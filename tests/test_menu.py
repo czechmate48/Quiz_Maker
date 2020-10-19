@@ -23,10 +23,6 @@ while True:
     next_page = page.get_next_page()  # NextPage Object
     page = PageFactory.create_page(next_page)  # Create the next page
 
-    #  10/5 Start with 'choose_quiz_to_take'. The logic for the page is done except for
-    #  where the program should go after selecting a quiz. You need to creating a
-    #  'TakeQuiz' component of the program that asks questions, stores the score,
-    #  and provides a final result
-    #
-    #  10/13 Started creating the "take_quiz.py" page. Need to create a test_answer.py object
-    #  when an answer is inputted by the user. Then save the test_answer.py to a cache.
+    #  10/18 -> Create a way to calculate the users final score on the quiz
+    #  ask the user if she would like to see which questions are incorrect
+    #  along with the corresponding correct answer

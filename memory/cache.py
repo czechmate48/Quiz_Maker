@@ -141,4 +141,9 @@ class QuizCache(Cacheable):
 
 
 class AnswerSheetCache(Cacheable):
-    pass
+
+    @classmethod
+    def print_cache(cls, category=CacheCat.answer_sheet):
+        cache = Container.get_cache(category)
+        for item in cache:
+            print(item.content)

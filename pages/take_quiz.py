@@ -3,18 +3,21 @@ from elements.test_answer import TestAnswer, TestAnswerKeys
 from format.menu import MenuFactory, OptionFactory
 from memory.cache import CacheCat, QuestionCache, AnswerSheetCache
 from memory.storage import Storage
-from pages.page import Page
+from pages.next_page import NextPage
+from pages.page import Page, PageOptions
 
 
 class TakeQuiz(Page):
 
     def __init__(self, _qst_file_path):
         self._qst_file_path = _qst_file_path
+        self._see_answers_question = "\nWould you like to see the correct answers to question you missed?"
 
     def display(self):
         self.cache_questions_in_qst_file()
         self.randomize_questions()
         self.ask_questions()
+        self.calculate_and_print_score()
 
     def cache_questions_in_qst_file(self):
         question_factory = QuestionFactory()
@@ -31,7 +34,6 @@ class TakeQuiz(Page):
                 self.ask_fill_in_the_blank_question(_question)
             else:
                 self.ask_option_question(_question)
-        AnswerSheetCache.print_cache()
 
     def ask_fill_in_the_blank_question(self, _question):
         _answer = MenuFactory.run_no_option_menu(_question.get_inquiry())
@@ -57,3 +59,25 @@ class TakeQuiz(Page):
         _test_answer = TestAnswer(_test_answer_values, TestAnswerKeys.get_keys(), True, _question)
         AnswerSheetCache.add_value_to_cache(CacheCat.answer_sheet, _test_answer)
 
+    def calculate_and_print_score(self):
+        _correct_answers: float = 0
+        _total_answers: float = 0
+        for _answer in AnswerSheetCache.get_all_values_in_cache(CacheCat.answer_sheet):
+            _total_answers = _total_answers + 1
+            if _answer.get_status() == True:
+                _correct_answers = _correct_answers + 1
+        _final_score = _correct_answers/_total_answers * 100
+        _final_score = round(_final_score, 2)
+        print("\nFINAL SCORE: ", _final_score, "%")
+        print("TOTAL QUESTIONS: ", _total_answers)
+        print("TOTAL CORRECT ANSWERS: ", _correct_answers)
+
+    ##################
+
+    def get_next_page(self):
+        _answer = MenuFactory.run_yes_no_menu(self._see_answers_question)
+        if _answer == 'n' or _answer == "no":
+            return NextPage(PageOptions.home)
+        else:
+            pass
+            # logic here

@@ -30,10 +30,10 @@ class TestAnswer(Element):
         self._user_answer: Option = ''
 
     def get_inquiry(self):
-        return self._question.get_inquiry()
+        return self.content[TestAnswerKeys.inquiry]
 
     def get_correct_answer(self):
-        return self._question.get_answer()
+        return self.content[TestAnswerKeys.correct_answer]
 
     def get_user_answer(self):
         _options = []
@@ -44,4 +44,4 @@ class TestAnswer(Element):
         return self._user_answer
 
     def get_status(self):
-        return self._user_answer == self.get_correct_answer()
+        return self.content[TestAnswerKeys.status]

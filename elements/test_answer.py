@@ -36,12 +36,7 @@ class TestAnswer(Element):
         return self.content[TestAnswerKeys.correct_answer]
 
     def get_user_answer(self):
-        _options = []
-        for _choice in self._question.get_choices():
-            _options.append(_choice)
-        self._user_answer = MenuFactory.run_option_menu_no_sm(_options, self.get_inquiry())
-        self._user_answer = self._user_answer.display_value
-        return self._user_answer
+        return self.content[TestAnswerKeys.user_answer]
 
     def get_status(self):
         return self.content[TestAnswerKeys.status]

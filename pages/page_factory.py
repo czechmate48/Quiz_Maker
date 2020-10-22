@@ -5,6 +5,7 @@ from pages.choose_how_to_edit_quiz import ChooseHowToEditQuiz
 from pages.choose_quiz_to_take import ChooseQuizToTake
 from pages.delete_quiz import DeleteQuiz
 from pages.delete_question import DeleteQuestion
+from pages.display_wrong_answers import DisplayWrongAnswers
 from pages.home import Home
 from pages.add_new_quiz import AddNewQuiz
 from pages.page import PageOptions
@@ -39,5 +40,7 @@ class PageFactory:
             return ChooseQuizToTake()
         elif page_name == PageOptions.take_quiz:
             return TakeQuiz(next_page.file_path)
+        elif page_name == PageOptions.display_wrong_answers:
+            return DisplayWrongAnswers()
         elif page_name == PageOptions.quit:
             return sys.exit()  # EXIT PROGRAM

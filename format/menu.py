@@ -114,6 +114,7 @@ class MenuFactory:
     @staticmethod
     def run_no_option_menu(header):
         menu = Menu([])
+        menu.display_space()
         menu.display_header(header)
         return menu.get_user_input()
 

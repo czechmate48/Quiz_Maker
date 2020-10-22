@@ -16,6 +16,7 @@ class PageOptions:
     delete_question: str = "Delete Question"
     delete_quiz: str = "Delete a Quiz"
     take_quiz: str = "Start Quiz"
+    display_wrong_answers: str = "Wrong Answers"
     quit: str = "Quit"
     back: str = "Back"
 

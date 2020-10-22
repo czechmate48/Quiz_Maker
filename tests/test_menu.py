@@ -23,5 +23,4 @@ while True:
     next_page = page.get_next_page()  # NextPage Object
     page = PageFactory.create_page(next_page)  # Create the next page
 
-    #  10/19 Display the incorrect answers to the quiz. Make sure to flush the cache
-    #  after complete or it will be part of the total for the next quiz taken
+    #  10/20 Develop a way to flush the cache after the quiz is complete

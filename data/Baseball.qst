@@ -1,0 +1,6 @@
+{'uid': 140531857494368, 'style': 'TRUE/FALSE', 'inquiry': 'Baseball uses bowling balls?', 'choices': ['true', 'false'], 'answer': 'false'}
+{'uid': 140531882989745, 'style': 'MULTIPLE CHOICE', 'inquiry': 'How many bases does it take to get a home run?', 'choices': ['1', '2', '3', '4'], 'answer': '4'}
+{'uid': 140531855997345, 'style': 'FILL IN THE BLANK', 'inquiry': 'Babe _ _ _ _', 'choices': [], 'answer': 'ruth'}
+{'uid': 140531857494369, 'style': 'MULTIPLE CHOICE', 'inquiry': 'Baseball bat are made out of what?', 'choices': ['clay', 'stone', 'wood'], 'answer': 'wood'}
+{'uid': 140531857112178, 'style': 'TRUE/FALSE', 'inquiry': 'Baseball is very fast paced', 'choices': ['true', 'false'], 'answer': 'false'}
+{'uid': 140531857112180, 'style': 'FILL IN THE BLANK', 'inquiry': 'chicago _ _ _ _', 'choices': [], 'answer': 'cubs'}

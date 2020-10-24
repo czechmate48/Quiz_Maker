@@ -18,10 +18,10 @@ class QuestionStyles(Keys):
     """This class holds the various types of styles a question can be.
     Extend class and just add values as needed for new styles"""
 
-    generic: str = "GENERIC"
-    true_false: str = "TRUE/FALSE"
-    multiple_choice: str = "MULTIPLE CHOICE"
-    fill_in_the_blank: str = "FILL IN THE BLANK"
+    generic: str = "Generic"
+    true_false: str = "True/False"
+    multiple_choice: str = "Multiple Choice"
+    fill_in_the_blank: str = "Fill in the blank"
 
     @staticmethod
     def get_keys():

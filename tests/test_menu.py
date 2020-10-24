@@ -23,4 +23,4 @@ while True:
     next_page = page.get_next_page()  # NextPage Object
     page = PageFactory.create_page(next_page)  # Create the next page
 
-    #  10/20 Develop a way to flush the cache after the quiz is complete
+    #  10/22 Fill in the blank answers are not working correctly

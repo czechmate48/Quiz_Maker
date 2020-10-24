@@ -17,6 +17,7 @@ class DeleteQuiz(Page):
         self._select_quiz_to_delete_answer = ''
         self._quiz_file_path = _quiz_file_path
         self._qst_file_path = '/home/czechmate/Documents/python/programs/Quiz_Maker/data/'
+        self._sure_about_deleting_question = "\nAre you sure you want to delete "
 
     #  CALLED EXTERNALLY
     def display(self):
@@ -44,8 +45,19 @@ class DeleteQuiz(Page):
         elif _answer == PageOptions.quit:
             return NextPage(PageOptions.quit)
         else:
-            self.remove_quiz()
+            _remove_quiz_answer = self.ask_if_sure_about_deleting_quiz()
+            if _remove_quiz_answer:
+                self.remove_quiz()
             return NextPage(PageOptions.delete_quiz, self._quiz_file_path)
+
+    def ask_if_sure_about_deleting_quiz(self):
+        _delete_quiz_question = self._sure_about_deleting_question + \
+                                self._select_quiz_to_delete_answer.display_value + "?"
+        _delete_quiz = MenuFactory.run_yes_no_menu(_delete_quiz_question)
+        if _delete_quiz == "n" or _delete_quiz == "no":
+            return False
+        else:
+            return True
 
     def remove_quiz(self):
         _quizzes = QuizCache.get_all_values_in_cache(CacheCat.quiz)

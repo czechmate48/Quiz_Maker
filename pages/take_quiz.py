@@ -29,14 +29,16 @@ class TakeQuiz(Page):
         _question: Question
         for _question in QuestionCache.get_all_values_in_cache(CacheCat.question):
             if _question.get_style() == QuestionStyles.fill_in_the_blank:
+                print("hello")
                 self.ask_fill_in_the_blank_question(_question)
             else:
                 self.ask_option_question(_question)
 
     def ask_fill_in_the_blank_question(self, _question):
         _answer = MenuFactory.run_no_option_menu(_question.get_inquiry())
-        _status = _answer == _question.get_answer()
+        _status = (_answer == _question.get_answer())
         self.add_test_answer_to_cache(_answer, _question, _status)
+
 
     def ask_option_question(self, _question):
         _choices = OptionFactory.generate_unlinked_options(self.get_options(_question))

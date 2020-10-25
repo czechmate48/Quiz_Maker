@@ -14,9 +14,7 @@ class Menu:
     into a dictionary - [selection variable,option]"""
 
     def __init__(self, options):
-
         """requires an option object from Option class"""
-
         self.first_option: Final = 65  # Used as a constant, starting ascii 65 (A)
         self._last_option = self.first_option
         self._option_lim: Final = 90  # Limited to 25 menu options
@@ -30,7 +28,7 @@ class Menu:
                 # throw out of bounds error
                 break
         self.initial_selection = chr(self._option_lim + 1)  # initial user selection used to launch loop
-        self.selection_message = "\nPlease make a selection"  # Can be overriden for customization
+        self.selection_message = "\nPlease make a selection"  # Can be overridden for customization
 
     ###############
 
@@ -63,10 +61,10 @@ class Menu:
 
     def get_user_selection(self):
         """returns the option object selected by the user"""
-        self._selection = self.initial_selection
-        while not self.check_valid_mc_selection(self._selection):
-            self._selection = input().upper()
-        return self.assigned_options[self._selection]
+        _selection = self.initial_selection
+        while not self.check_valid_mc_selection(_selection):
+            _selection = input().upper()
+        return self.assigned_options[_selection]
 
     def check_valid_mc_selection(self, selection):
         if Selection.is_empty(selection):
@@ -81,10 +79,11 @@ class Menu:
             return True
 
     def get_yes_no_selection(self):
-        self._selection = input()
-        while not Selection.is_yesno(self._selection):
-            self._selection = input()
-        return self._selection
+        _selection = input()
+        while not Selection.is_yesno(_selection):
+            _selection = input()
+        _selection = _selection.lower()
+        return _selection
 
 
 #############################
@@ -121,6 +120,7 @@ class MenuFactory:
     @staticmethod
     def run_yes_no_menu(header):
         menu = Menu([])
+        menu.display_space()
         menu.display_header(header)
         return menu.get_yes_no_selection()
 

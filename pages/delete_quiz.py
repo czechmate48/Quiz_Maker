@@ -13,11 +13,11 @@ class DeleteQuiz(Page):
 
     def __init__(self, _quiz_file_path):
         super().__init__()
-        self._select_quiz_to_delete_question = "\nWhich quiz would you like to delete?"
+        self._select_quiz_to_delete_question = "Which quiz would you like to delete?"
         self._select_quiz_to_delete_answer = ''
         self._quiz_file_path = _quiz_file_path
         self._qst_file_path = '/home/czechmate/Documents/python/programs/Quiz_Maker/data/'
-        self._sure_about_deleting_question = "\nAre you sure you want to delete "
+        self._sure_about_deleting_question = "Are you sure you want to delete "
 
     #  CALLED EXTERNALLY
     def display(self):
@@ -52,7 +52,7 @@ class DeleteQuiz(Page):
 
     def ask_if_sure_about_deleting_quiz(self):
         _delete_quiz_question = self._sure_about_deleting_question + \
-                                self._select_quiz_to_delete_answer.display_value + "?"
+                                self._select_quiz_to_delete_answer.display_value + "? (Yes/No)"
         _delete_quiz = MenuFactory.run_yes_no_menu(_delete_quiz_question)
         if _delete_quiz == "n" or _delete_quiz == "no":
             return False

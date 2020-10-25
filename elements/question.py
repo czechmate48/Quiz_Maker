@@ -176,32 +176,32 @@ class MultipleChoice(Question):
 
 class QuestionFactory(ElementFactory):
 
-    def build_element(self, qstyle, qvalues=[], qkeys=QuestionKeys.get_keys(), generate_id=True):
-        QuestionFactory.create_element(qstyle, qvalues, qkeys, generate_id)
+    def build_element(self, style, values=[], keys=QuestionKeys.get_keys(), generate_id=True):
+        QuestionFactory.create_element(style, values, keys, generate_id)
 
     @staticmethod
-    def create_element(qstyle, qvalues=[], qkeys=QuestionKeys.get_keys(), generate_id=True):
-        if qstyle == QuestionStyles.true_false:
-            return QuestionFactory.create_true_false_question(qvalues, qkeys, generate_id)
-        elif qstyle == QuestionStyles.multiple_choice:
-            return QuestionFactory.create_multiple_choice_question(qvalues, qkeys, generate_id)
-        elif qstyle == QuestionStyles.fill_in_the_blank:
-            return QuestionFactory.create_fill_in_the_blank_question(qvalues, qkeys, generate_id)
+    def create_element(style, values=[], keys=QuestionKeys.get_keys(), generate_id=True):
+        if style == QuestionStyles.true_false:
+            return QuestionFactory.create_true_false_question(values, keys, generate_id)
+        elif style == QuestionStyles.multiple_choice:
+            return QuestionFactory.create_multiple_choice_question(values, keys, generate_id)
+        elif style == QuestionStyles.fill_in_the_blank:
+            return QuestionFactory.create_fill_in_the_blank_question(values, keys, generate_id)
         else:
-            return QuestionFactory.create_generic_question(qvalues, qkeys, generate_id)
+            return QuestionFactory.create_generic_question(values, keys, generate_id)
 
     @staticmethod
-    def create_true_false_question(qvalues=[], qkeys=QuestionKeys.get_keys(), generate_id=True):
-        return TrueFalse(qvalues, qkeys, generate_id)
+    def create_true_false_question(values=[], keys=QuestionKeys.get_keys(), generate_id=True):
+        return TrueFalse(values, keys, generate_id)
 
     @staticmethod
-    def create_multiple_choice_question(qvalues=[], qkeys=QuestionKeys.get_keys(), generate_id=True):
-        return MultipleChoice(qvalues, qkeys, generate_id)
+    def create_multiple_choice_question(values=[], keys=QuestionKeys.get_keys(), generate_id=True):
+        return MultipleChoice(values, keys, generate_id)
 
     @staticmethod
-    def create_fill_in_the_blank_question(qvalues=[], qkeys=QuestionKeys.get_keys(), generate_id=True):
-        return FillInTheBlank(qvalues, qkeys, generate_id)
+    def create_fill_in_the_blank_question(values=[], keys=QuestionKeys.get_keys(), generate_id=True):
+        return FillInTheBlank(values, keys, generate_id)
 
     @staticmethod
-    def create_generic_question(qvalues=[], qkeys=QuestionKeys.get_keys(), generate_id=True):
-        return Question(qvalues, qkeys, generate_id)
+    def create_generic_question(values=[], keys=QuestionKeys.get_keys(), generate_id=True):
+        return Question(values, keys, generate_id)

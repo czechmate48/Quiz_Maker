@@ -4,6 +4,10 @@ from dataclasses import dataclass
 
 @dataclass
 class PageOptions:
+
+    def __init__(self):
+        pass
+
     home: str = "Home"
     add_new_quiz: str = "Add a Quiz"
     add_questions_to_quiz: str = "Add Questions to Quiz"

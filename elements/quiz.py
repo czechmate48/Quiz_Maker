@@ -40,7 +40,7 @@ class Quiz(Element):
 
     @staticmethod
     def prompt_for_name():
-        _header = "\nWhat is the name of this quiz?"
+        _header = "What is the name of this quiz?"
         _selected_option = MenuFactory.run_no_option_menu(_header)
         return _selected_option
 

@@ -1,8 +1,5 @@
 # elements.element.py
 
-"""Elements are components of the program that are essentially generated
-as a dictionary. They can be prompted for after the class is inherited"""
-
 from memory.cache import UniqueId
 from elements.keys import Keys
 from dataclasses import dataclass
@@ -10,26 +7,32 @@ from dataclasses import dataclass
 @dataclass
 class ElementStyle(Keys):
 
+    def __init__(self):
+        pass
+
     generic: str = "generic"
 
 
 class Element:
 
-    def __init__(self, qvalues, qkeys, generate_id=True):
+    """Element class encapsulates a dictionary item. The class is intended
+    to be inherited from for creating the various components of the program"""
+
+    def __init__(self, values, keys, generate_id=True):
         self._values = []
         self._keys = []
         if generate_id:
             self.uid = id(self)
             self.uid = UniqueId.generate_uid(self.uid)
             self._values.append(self.uid)
-        for value in qvalues:
+        for value in values:
             self._values.append(value)
-        for key in qkeys:
+        for key in keys:
             self._keys.append(key)
         self.content = self.merge_input(self._values, self._keys)
 
-    def merge_input(self, qvalues, qkeys):
-        _items = zip(qkeys,qvalues)
+    def merge_input(self, values, keys):
+        _items = zip(keys, values)
         return {item[0]: item[1] for item in _items}
 
 

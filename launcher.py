@@ -1,4 +1,0 @@
-#Launcher.py
-
-temp=Temp()
-

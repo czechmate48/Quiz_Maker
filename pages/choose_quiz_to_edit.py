@@ -2,6 +2,7 @@ from memory.cache import QuizCache, CacheCat
 from format.menu import OptionFactory, MenuFactory
 from pages.next_page import NextPage
 from pages.page import Page, PageOptions
+from memory.storage import StorageData
 
 
 class ChooseQuizToEdit(Page):
@@ -10,8 +11,6 @@ class ChooseQuizToEdit(Page):
 
     def __init__(self):
         super().__init__()
-        self._quiz_question_path = '/home/czechmate/Documents/python/programs/Quiz_Maker/data/'
-        self._quiz_question_extension = ".qst"
         self._choose_quiz_question = "Which quiz would you like to edit?"
         self._choose_quiz_answer = ""
 
@@ -45,5 +44,5 @@ class ChooseQuizToEdit(Page):
         elif _answer == PageOptions.quit:
             return NextPage(PageOptions.quit)
         else:
-            _qst_file_path = self._quiz_question_path + _answer + self._quiz_question_extension
+            _qst_file_path = StorageData.data_directory_path + _answer + StorageData.question_file_extension
             return NextPage(PageOptions.choose_how_to_edit_quiz, _qst_file_path)

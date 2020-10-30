@@ -13,8 +13,6 @@ from memory.storage import Storage
 # FIXME -> Create bash script to create file_path.txt and set locations
 # FIXME -> Create bash script to create quizzes.qz and set locations
 
-question_file_path = Storage.get_config_value('/home/czechmate/Documents/python/programs/Quiz_Maker/data/file_paths.txt', 'question_file_path')
-
 initial_page = NextPage(PageOptions.home)
 page = PageFactory.create_page(initial_page)
 

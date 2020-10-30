@@ -4,7 +4,7 @@ from pages.next_page import NextPage
 from pages.page import Page, PageOptions
 from elements.question import Question
 from elements.quiz import Quiz, QuizKeys
-from memory.storage import Storage
+from memory.storage import Storage, StorageData
 
 
 class AddNewQuiz(Page):
@@ -13,11 +13,11 @@ class AddNewQuiz(Page):
 
     def __init__(self):
         super().__init__()
-        self._all_quiz_question_file_path = '/home/czechmate/Documents/python/programs/Quiz_Maker/data/'
+        self._all_quiz_question_file_path = StorageData.data_directory_path
         self._new_quiz_question_file_path = ''
-        self._add_questions_question = "\nWould you like to add questions? (Yes/No)"
+        self._add_questions_question = "Would you like to add questions? (Yes/No)"
         self._question_file_extension = ".qst"
-        self._config_file_path = '../data/file_paths.txt'  # FIXME -> Update filepath to correct path when done testing
+        self._file_paths_file = StorageData.file_paths_file
         self._quizzes_file_path = ""
         self._new_quiz = ''
 
@@ -40,8 +40,8 @@ class AddNewQuiz(Page):
         QuizCache.add_value_to_cache(CacheCat.quiz, _quiz)
 
     def save_quiz_to_file(self, _quiz):
-        self._new_quiz_question_file_path = self._all_quiz_question_file_path + _quiz.get_name() + self._question_file_extension
-        self._quizzes_file_path = Storage.get_config_value(self._config_file_path, 'quiz_file_path')
+        self._new_quiz_question_file_path = self._all_quiz_question_file_path + _quiz.get_name() + StorageData.question_file_extension
+        self._quizzes_file_path = Storage.get_config_value(self._file_paths_file, StorageData.qa_file_name)
         Storage.append_element_to_file(self._quizzes_file_path, _quiz.content)
         Storage.create_new_file(self._new_quiz_question_file_path)
 

@@ -2,7 +2,7 @@ from format.menu import MenuFactory
 from pages.next_page import NextPage
 from pages.page import Page, PageOptions
 from elements.question import Question, QuestionFactory, QuestionKeys
-from memory.storage import Storage
+from memory.storage import Storage, StorageData
 
 
 class AddQuestionsToQuiz(Page):
@@ -12,7 +12,7 @@ class AddQuestionsToQuiz(Page):
         super().__init__()
         self.qst_file_path = qst_file_path
         self.add_another_question_answer = "n"
-        self.add_another_question_question = "\nAdd another question?"
+        self.add_another_question_question = "Add another question?"
 
     #  CALLED EXTERNALLY
     def display(self):

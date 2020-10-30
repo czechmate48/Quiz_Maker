@@ -4,7 +4,7 @@ from memory.cache import QuizCache, CacheCat
 from format.menu import OptionFactory, MenuFactory
 from pages.next_page import NextPage
 from pages.page import Page, PageOptions
-from memory.storage import Storage
+from memory.storage import Storage, StorageData
 
 
 class DeleteQuiz(Page):
@@ -16,7 +16,6 @@ class DeleteQuiz(Page):
         self._select_quiz_to_delete_question = "Which quiz would you like to delete?"
         self._select_quiz_to_delete_answer = ''
         self._quiz_file_path = _quiz_file_path
-        self._qst_file_path = '/home/czechmate/Documents/python/programs/Quiz_Maker/data/'
         self._sure_about_deleting_question = "Are you sure you want to delete "
 
     #  CALLED EXTERNALLY
@@ -81,8 +80,8 @@ class DeleteQuiz(Page):
             Storage.append_element_to_file(self._quiz_file_path, _quiz.content)
 
     def remove_quiz_question_file(self, _quiz):
-        _quiz_question_path = self._qst_file_path + self._select_quiz_to_delete_answer.display_value \
-                              + '.qst'
+        _quiz_question_path = StorageData.data_directory_path + self._select_quiz_to_delete_answer.display_value \
+                              + StorageData.question_file_extension
         os.remove(_quiz_question_path)
 
 

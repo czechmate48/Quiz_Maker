@@ -3,7 +3,7 @@ from format.menu import OptionFactory, MenuFactory
 from pages.next_page import NextPage
 from pages.page import Page, PageOptions
 from elements.question import QuestionFactory, QuestionKeys
-from memory.storage import Storage
+from memory.storage import Storage, StorageData
 
 
 class ChooseHowToEditQuiz(Page):

@@ -29,7 +29,6 @@ class TakeQuiz(Page):
         _question: Question
         for _question in QuestionCache.get_all_values_in_cache(CacheCat.question):
             if _question.get_style() == QuestionStyles.fill_in_the_blank:
-                print("hello")
                 self.ask_fill_in_the_blank_question(_question)
             else:
                 self.ask_option_question(_question)

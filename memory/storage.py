@@ -3,6 +3,8 @@
 from elements.element import ElementStyle
 from memory.file_manager import FileWriter, FileReader
 from memory.cache import Cacheable
+from dataclasses import dataclass
+from elements.keys import Keys
 import ast
 
 
@@ -62,3 +64,16 @@ class Storage(FileWriter, FileReader):
                 _values[1] = str(_values[1])  # convert to string
                 _values[1].rstrip('\n')  # removes /n at end of variable
                 return _values[1]
+
+
+@dataclass
+class StorageData(Keys):
+
+    # data_directory_path: str = "/var/lib/quiz_maker"  # Referenced in installer with the same path. Do not change unless also changing in install.sh
+    data_directory_path: str = '/home/czechmate/Documents/python/programs/Quiz_Maker/data/'  # FIXME -> Delete after done testing and replace with above
+    file_paths_file: str = data_directory_path + "/file_paths.txt"
+    qa_file_name: str = 'quiz_file_path'
+    qz_file_path: str = Storage.get_config_value(file_paths_file, qa_file_name)
+    question_file_extension: str = ".qst"
+
+

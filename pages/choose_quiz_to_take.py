@@ -29,7 +29,7 @@ class ChooseQuizToTake(Page):
         elif _answer == PageOptions.quit:
             return NextPage(PageOptions.quit)
         else:
-            _quiz_question_path = StorageData.qz_file_path + _answer + StorageData.question_file_extension
+            _quiz_question_path = StorageData.data_directory_path + _answer + StorageData.question_file_extension
             return NextPage(PageOptions.take_quiz, _quiz_question_path)
 
     def get_options(self):

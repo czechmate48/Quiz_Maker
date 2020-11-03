@@ -1,7 +1,9 @@
 #!/bin/bash
 
 #Install python 3.8
-sudo apt-get install python3.8
+sudo apt install software-properties-common
+sudo add-apt-repository ppa:deadsnakes/ppa
+sudo apt install python3.8
 
 #Data directory
 data_path = "/var/lib/quiz_maker" #The location of the data directory - STATIC, do not change as referenced in quiz_maker.py with same path

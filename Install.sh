@@ -27,8 +27,4 @@ sudo touch $command_path
 sudo echo "python3.8 $data_path/Quiz_Maker/main/quiz_maker.py" > command_path
 
 #Move project folder to Data directory
-<<<<<<< HEAD
-mv "AppData/" $data_path
-=======
 mv ../ $data_path
->>>>>>> 69e3c9b0a896d69d4fea7714c5cc5332d994d4b2

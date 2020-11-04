@@ -1,28 +1,30 @@
 #!/bin/bash
 
 #Install python 3.8
-sudo apt-get install python3.8
+sudo apt install software-properties-common
+sudo add-apt-repository ppa:deadsnakes/ppa
+sudo apt install python3.8
 
 #Data directory
-data_path = "/var/lib/quiz_maker" #The location of the data directory - STATIC, do not change as referenced in quiz_maker.py with same path
+data_path="/var/lib/quiz_maker" #The location of the data directory - STATIC, do not change as referenced in quiz_maker.py with same path
 mkdir $data_path
 
 #Create file_path.txt
-file_paths = "$data_path/file_paths.txt" #file_path.txt holds two variables that indicate where quizzes and their questions are saved
+file_paths="$data_path/file_paths.txt" #file_path.txt holds two variables that indicate where quizzes and their questions are saved
 touch $file_paths
 
 #Load quizzez.qz into file_path.txt
-quiz_file_path = "quiz_file_path=$data_path/quizzes.qz=" # Ignore '=' sign at end
+quiz_file_path="quiz_file_path=$data_path/quizzes.qz=" # Ignore '=' sign at end
 echo $quiz_file_path > $file_paths
 
 #Load questions.qst into file_path.txt
-question_file_path = "question_file_path=$data_path/questions.qst=" # Ignore '=' sign at end
+question_file_path="question_file_path=$data_path/questions.qst=" # Ignore '=' sign at end
 echo $question_file_path > $file_paths
 
 #Create a bash command
-command_path = "/bin/quiz-maker"
-sudo touch command_path
+command_path="/bin/quiz-maker"
+sudo touch $command_path
 sudo echo "python3.8 $data_path/Quiz_Maker/main/quiz_maker.py" > command_path
 
 #Move project folder to Data directory
-mv ../ $data_path
+mv "AppData/" $data_path

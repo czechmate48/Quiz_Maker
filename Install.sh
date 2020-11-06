@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # Install python 3.8
 sudo apt install software-properties-common
 sudo add-apt-repository ppa:deadsnakes/ppa

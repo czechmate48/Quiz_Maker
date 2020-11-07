@@ -12,17 +12,23 @@ sudo apt install python3.8
 # Data directory
 data_path='/var/lib/quiz_maker'
 sudo mkdir -p $data_path
+chmod ugo=rwx $data_path
 
 # Create file_path.txt
 file_paths="$data_path/file_paths.txt"
-chmod ugo=rwx $file_paths
 sudo touch $file_paths
+chmod ugo=rwx $file_paths
 
-# Load quizzez.qz into file_path.txt
+# Create quizzes.qz
+quizzes_file="$data_path/quizzes.qz"
+sudo touch $quizzes_file
+chmod ugo=rwx $quizzes_file
+
+# Load quizzes.qz location into file_path.txt
 quiz_file_path="quiz_file_path=$data_path/quizzes.qz="
 sudo echo $quiz_file_path > $file_paths
 
-# Load questions.qst into file_path.txt
+# Load questions.qst location into file_path.txt
 question_file_path="question_file_path=$data_path/questions.qst="
 sudo echo $question_file_path > $file_paths
 

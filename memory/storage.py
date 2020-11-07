@@ -69,8 +69,7 @@ class Storage(FileWriter, FileReader):
 @dataclass
 class StorageData(Keys):
 
-    data_directory_path: str = "/var/lib/quiz_maker"  # Referenced in installer with the same path. Do not change unless also changing in install.sh
-    # data_directory_path: str = '/home/czechmate/Documents/python/programs/Quiz_Maker/data/'  # For testing purposes only
+    data_directory_path: str = "/var/lib/quiz_maker/"  # Referenced in installer with the same path. Do not change unless also changing in install.sh
     file_paths_file: str = data_directory_path + "/file_paths.txt"
     qa_file_name: str = 'quiz_file_path'
     qz_file_path: str = Storage.get_config_value(file_paths_file, qa_file_name)

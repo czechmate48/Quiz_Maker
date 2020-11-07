@@ -35,6 +35,9 @@ class FileReader:
     
     @classmethod    
     def get_lines(cls, file_path):
-        with open(file_path) as fi:
-            _lines = [line for line in fi.readlines()]
-        return _lines
+        if file_path is not None:
+            with open(file_path) as fi:
+                _lines = [line for line in fi.readlines()]
+            return _lines
+        else:
+            return []

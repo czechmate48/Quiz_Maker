@@ -26,11 +26,11 @@ chmod ugo=rwx $quizzes_file
 
 # Load quizzes.qz location into file_path.txt
 quiz_file_path="quiz_file_path=$data_path/quizzes.qz="
-sudo echo $quiz_file_path > $file_paths
+sudo echo $quiz_file_path >> $file_paths
 
 # Load questions.qst location into file_path.txt
 question_file_path="question_file_path=$data_path/questions.qst="
-sudo echo $question_file_path > $file_paths
+sudo echo $question_file_path >> $file_paths
 
 # Create a bash command
 command_path="/bin/quizmaker"
